@@ -1,0 +1,31 @@
+{
+  "description": "Accounts to follow on launch day — SaaS, CS, RevOps, AI builders",
+  "accounts": [
+    {"handle": "@OpenAI", "why": "AI SaaS ecosystem"},
+    {"handle": "@a16z", "why": "SaaS investing discourse"},
+    {"handle": "@saas", "why": "SaaS community hub"},
+    {"handle": "@lennysan", "why": "Product & growth"},
+    {"handle": "@jasonlk", "why": "SaaStr / B2B SaaS"},
+    {"handle": "@shl", "why": "SaaS metrics"},
+    {"handle": "@dharmesh", "why": "HubSpot / inbound SaaS"},
+    {"handle": "@patio11", "why": "SaaS economics"},
+    {"handle": "@amandanat", "why": "B2B marketing"},
+    {"handle": "@elenaverna", "why": "PLG & growth"},
+    {"handle": "@kylepoyar", "why": "OpenView / PLG benchmarks"},
+    {"handle": "@TomaszTunguz", "why": "SaaS data"},
+    {"handle": "@alexiskold", "why": "Enterprise SaaS"},
+    {"handle": "@murrchart", "why": "SaaS charts & data viz"},
+    {"handle": "@Reforge", "why": "Growth & retention"},
+    {"handle": "@GainsightHQ", "why": "Customer Success"},
+    {"handle": "@ChurnZero", "why": "Churn / CS tooling"},
+    {"handle": "@totango", "why": "CS platform"},
+    {"handle": "@Vitally", "why": "CS for SaaS"},
+    {"handle": "@ChartMogul", "why": "SaaS analytics"}
+  ],
+  "engage_daily": 5,
+  "engage_tips": [
+    "Reply to 5 SaaS/CS posts per day with a data point, not a pitch",
+    "Quote-tweet horror stories with your portfolio telemetry angle",
+    "Join #SaaS #RevOps #CustomerSuccess conversations on Tue-Thu mornings"
+  ]
+}
