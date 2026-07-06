@@ -30,7 +30,7 @@ from x_api import log, post_tweet  # noqa: E402
 load_dotenv(ROOT / ".env")
 
 SEEN_PATH = Path(__file__).parent / "trends_seen.json"
-MAX_PER_WEEK = int(os.getenv("TREND_MAX_PER_WEEK", "2"))
+MAX_PER_WEEK = int(os.getenv("TREND_MAX_PER_WEEK", "4"))
 
 REACTIVE_SYSTEM = """\
 You write a short reactive X post for @murmurRed when something big happens in AI.
