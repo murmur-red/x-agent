@@ -349,6 +349,70 @@ ENGAGEMENT_HOOKS: list[Post] = [
     ),
 ]
 
+QUICK_TAKES: list[Post] = [
+    Post(
+        "Pilot success ≠ production adoption.\n\n"
+        "The handoff from demo team to ops is where most AI budgets go to die.",
+        "single",
+    ),
+    Post(
+        "Three numbers every AI ops lead should see weekly:\n\n"
+        "1. Inference MoM %\n"
+        "2. Active users / licensed seats\n"
+        "3. Cost per successful workflow run",
+        "single",
+    ),
+    Post(
+        "Your AI vendor's NPS survey won't tell you the workflow died.\n\n"
+        "Your inference graph will.",
+        "single",
+    ),
+    Post(
+        "Shelfware isn't cancelled software.\n\n"
+        "It's software still on the invoice while the team routes around it.",
+        "single",
+    ),
+    Post(
+        "The quiet killer: same contract, fewer API calls, no incident ticket.\n\n"
+        "That's not stability. That's fading adoption.",
+        "single",
+    ),
+    Post(
+        "AI procurement asks: 'What did we buy?'\n\n"
+        "AI ops should ask: 'What still runs on Monday morning?'",
+        "single",
+    ),
+    Post(
+        "Token spend without workflow ownership is just expensive hope.",
+        "single",
+    ),
+    Post(
+        "If nobody owns the AI workflow after go-live,\n"
+        "inference decay isn't a surprise — it's the default.",
+        "single",
+    ),
+    Post(
+        "Companies track AI licenses.\n\n"
+        "Few track whether anyone still calls the API on a random Tuesday.",
+        "single",
+    ),
+    Post(
+        "Week 9 problem: pilot team moved on, dashboard still green, "
+        "budget still committed, usage already sliding.",
+        "single",
+    ),
+    Post(
+        "Good AI ops isn't more dashboards.\n\n"
+        "It's one honest graph: licensed spend vs actual inference.",
+        "single",
+    ),
+    Post(
+        "The best AI rollout signal isn't a launch tweet.\n\n"
+        "It's whether usage holds 90 days after the press release.",
+        "single",
+    ),
+]
+
 BEHIND_THE_SCENES: list[Post] = [
     Post(
         "Shipped: generator-critic loop on usage data.\n\n"
@@ -378,6 +442,10 @@ WEEKLY_THEMES = {
     2: "AI ops — how companies should run inference",
     3: "Company stories — fading adoption patterns",
     4: "Community — polls, building in public",
+    5: "Deep dive — usage gap (repeat for new followers)",
+    6: "Ops playbook + quick takes",
+    7: "Company patterns + engagement",
+    8: "Evergreen hits + polls",
 }
 
 

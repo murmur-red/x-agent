@@ -30,7 +30,7 @@ from x_api import log, post_tweet  # noqa: E402
 load_dotenv(ROOT / ".env")
 
 SEEN_PATH = Path(__file__).parent / "trends_seen.json"
-MAX_PER_WEEK = int(os.getenv("TREND_MAX_PER_WEEK", "4"))
+MAX_PER_WEEK = int(os.getenv("TREND_MAX_PER_WEEK", "6"))
 
 REACTIVE_SYSTEM = """\
 You write a short reactive X post for @murmurRed when something big happens in AI.
@@ -114,34 +114,46 @@ def _scan_grok(api_key: str) -> dict | None:
     return None
 
 
+_HN_QUERIES = ("OpenAI", "Claude", "LLM", "artificial intelligence", "Anthropic")
+
+
 def _scan_hackernews() -> dict | None:
     """Fallback: top HN AI stories with high engagement."""
+    min_points = int(os.getenv("TREND_HN_MIN_POINTS", "75"))
     try:
-        r = httpx.get(
-            "https://hn.algolia.com/api/v1/search_by_date",
-            params={
-                "query": "OpenAI",
-                "tags": "story",
-                "hitsPerPage": 10,
-            },
-            timeout=20,
-        )
-        r.raise_for_status()
-        hits = r.json().get("hits", [])
-        for hit in hits:
-            points = int(hit.get("points") or 0)
-            if points < 100:
-                continue
+        for query in _HN_QUERIES:
+            event = _hn_query(query, min_points)
+            if event:
+                return event
+    except Exception as e:
+        log(f"TREND SCAN ERROR | {e}")
+    return None
+
+
+def _hn_query(query: str, min_points: int) -> dict | None:
+    r = httpx.get(
+        "https://hn.algolia.com/api/v1/search_by_date",
+        params={
+            "query": query,
+            "tags": "story",
+            "hitsPerPage": 15,
+        },
+        timeout=20,
+    )
+    r.raise_for_status()
+    hits = r.json().get("hits", [])
+    for hit in hits:
+        points = int(hit.get("points") or 0)
+        if points < min_points:
+            continue
             created = datetime.fromtimestamp(hit["created_at_i"], tz=timezone.utc)
             if datetime.now(timezone.utc) - created > timedelta(hours=18):
                 continue
-            return {
-                "event": hit["title"][:80],
-                "summary": f"HN story with {points} points. {hit.get('url', '')}",
-                "significance": "medium",
-            }
-    except Exception as e:
-        log(f"TREND SCAN ERROR | {e}")
+        return {
+            "event": hit["title"][:80],
+            "summary": f"HN story with {points} points. {hit.get('url', '')}",
+            "significance": "medium",
+        }
     return None
 
 

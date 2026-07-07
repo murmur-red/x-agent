@@ -1,6 +1,6 @@
 # X automation — runs on GitHub even if your Mac is off.
-# Cost control: no per-run API verify; hourly windows only; blog promos skip https URLs
-# (~$0.015/tweet text vs ~$0.20 with URL). See docs.x.com/x-api/getting-started/pricing.
+# Budget target: ~€5/mo (~$5.50). No per-run API verify (idle runs = $0).
+# ~$0.015/text tweet, ~$0.20/tweet with https URL. See docs.x.com/x-api/getting-started/pricing.
 #
 # Required repo secrets (Settings → Secrets → Actions):
 #   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET
@@ -13,9 +13,9 @@
 name: X Social Automation
 
 on:
-  # Hourly during posting windows only — idle runs cost $0 on X API (no verify step).
+  # Every 30 min, 07–22 UTC — catches all calendar slots; idle runs cost $0 on X API.
   schedule:
-    - cron: "0 7-10,13-18 * * *"
+    - cron: "*/30 7-22 * * *"
   workflow_dispatch:
 
 permissions:
@@ -50,8 +50,8 @@ jobs:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           BLOG_PROMO_TZ: Europe/Amsterdam
           BLOG_PROMO_HOUR: "9"
-          TREND_MAX_PER_WEEK: "2"
-          BLOG_PROMO_FULL_URL: "false"
+          TREND_MAX_PER_WEEK: "6"
+          BLOG_PROMO_FULL_URL: "true"
         run: |
           python3 x_scheduler.py post
           python3 social/x_blog_promoter.py
