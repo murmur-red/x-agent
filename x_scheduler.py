@@ -187,7 +187,7 @@ def post_tweet(text: str, reply_to: str | None = None) -> str | None:
 
 def _queue_self_reply(tweet_id: str, row: CalendarRow) -> None:
     """Queue a short follow-up reply under our own post (optional)."""
-    if os.getenv("COMMENT_SELF_REPLY", "true").lower() not in ("1", "true", "yes"):
+    if os.getenv("COMMENT_SELF_REPLY", "false").lower() not in ("1", "true", "yes"):
         return
     if row.thread_id and int(row.thread_part or 0) > 1:
         return

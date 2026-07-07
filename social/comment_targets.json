@@ -1,11 +1,43 @@
 {
-  "description": "Tweet IDs to reply to. Add manually or let calendar posts auto-queue self-replies.",
+  "description": "Reply queue \u2014 auto-filled by Grok (contributors + mentions) or --add URL.",
   "targets": [
     {
-      "tweet_id": "2074475828319031716",
-      "author": "",
-      "source": "manual",
-      "note": "",
+      "tweet_id": "2074444816520519832",
+      "author": "jasonlk",
+      "source": "contributor",
+      "note": "\"A great VP Sales always increases revenue in the first 60 Days. Why? Because if nothing else, they get more out of whatever they inherited.\"",
+      "status": "pending",
+      "added": "2026-07-07"
+    },
+    {
+      "tweet_id": "2074300298840174810",
+      "author": "lennysan",
+      "source": "contributor",
+      "note": "Emerging challenge for engineers: loneliness",
+      "status": "pending",
+      "added": "2026-07-07"
+    },
+    {
+      "tweet_id": "2074326072385245663",
+      "author": "patio11",
+      "source": "contributor",
+      "note": "Japanese insurance company staff: May I enquire as to what you hope to do with a [yen-denominated] term life policy while not residing in Japan?",
+      "status": "pending",
+      "added": "2026-07-07"
+    },
+    {
+      "tweet_id": "2074168746093031866",
+      "author": "shl",
+      "source": "contributor",
+      "note": "What should the IRS ship in the second half of 2026?",
+      "status": "pending",
+      "added": "2026-07-07"
+    },
+    {
+      "tweet_id": "2074165268532662545",
+      "author": "alexiskold",
+      "source": "contributor",
+      "note": "\ud83d\udcdaBlog Post: 7 Truth Across Venture Investing Stages https://www.startuphacks.vc/blog/7-truths-across-venture-investing-stages @2048vc // #startuphacks // #VC",
       "status": "pending",
       "added": "2026-07-07"
     }

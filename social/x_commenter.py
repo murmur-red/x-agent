@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Light engagement — reply with a short emoji or a few words.
+Engagement replies — short emoji or a few words.
 
-X API on pay-per-use can post/reply but cannot read other users' timelines,
-so targets come from comment_targets.json (manual URLs/IDs or auto-queued
-after our own calendar posts).
+1. Replies to people who mention/comment on @murmurRed (Grok x_search discovery)
+2. Replies on contributor posts from follow_list.json (Grok x_search)
+3. Manual targets via --add <tweet URL>
 
 Usage:
   python3 social/x_commenter.py
   python3 social/x_commenter.py --dry-run
   python3 social/x_commenter.py --force
-  python3 social/x_commenter.py --add https://x.com/user/status/123456789
+  python3 social/x_commenter.py --add https://x.com/user/status/123
+  python3 social/x_commenter.py --discover-only
 """
 
 from __future__ import annotations
@@ -30,17 +31,22 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(Path(__file__).parent))
 
-from x_api import credentials_ok, log, post_tweet  # noqa: E402
+from x_api import credentials_ok, get_client, log, post_tweet  # noqa: E402
+from x_discover import discover_contributor_posts, discover_mentions  # noqa: E402
 
 load_dotenv(ROOT / ".env")
 
-POOL_PATH = Path(__file__).parent / "comment_pool.json"
+FOLLOW_PATH = Path(__file__).parent / "follow_list.json"
+OUTBOUND_POOL_PATH = Path(__file__).parent / "comment_pool.json"
+MENTION_POOL_PATH = Path(__file__).parent / "mention_reply_pool.json"
 TARGETS_PATH = Path(__file__).parent / "comment_targets.json"
 SEEN_PATH = Path(__file__).parent / "comments_seen.json"
 TZ = ZoneInfo(os.getenv("COMMENT_TZ", "Europe/Amsterdam"))
 COMMENT_HOUR = int(os.getenv("COMMENT_HOUR", "10"))
-MAX_PER_DAY = int(os.getenv("COMMENT_MAX_PER_DAY", "5"))
+OUTBOUND_MAX = int(os.getenv("COMMENT_MAX_PER_DAY", "5"))
+MENTION_MAX = int(os.getenv("MENTION_REPLY_MAX_PER_DAY", "10"))
 
+SOURCE_PRIORITY = {"mention": 0, "contributor": 1, "manual": 2, "own_post": 9}
 TWEET_ID_RE = re.compile(r"/status/(\d+)")
 
 
@@ -54,9 +60,12 @@ def save_json(path: Path, data: dict) -> None:
     path.write_text(json.dumps(data, indent=2))
 
 
-def comments_today(seen: dict) -> int:
+def comments_today(seen: dict, source: str | None = None) -> int:
     today = date.today().isoformat()
-    return sum(1 for h in seen.get("history", []) if h.get("date") == today)
+    items = seen.get("history", [])
+    if source is None:
+        return sum(1 for h in items if h.get("date") == today)
+    return sum(1 for h in items if h.get("date") == today and h.get("source") == source)
 
 
 def pick_reply(tweet_id: str, pool: list[str]) -> str:
@@ -71,15 +80,13 @@ def parse_tweet_id(value: str) -> str | None:
     return match.group(1) if match else None
 
 
-def pending_targets(targets_doc: dict, seen: dict) -> list[dict]:
-    done = set(seen.get("commented_tweet_ids", []))
-    pending: list[dict] = []
-    for item in targets_doc.get("targets", []):
-        tid = str(item.get("tweet_id", "")).strip()
-        if not tid or tid in done or item.get("status") == "done":
-            continue
-        pending.append(item)
-    return pending
+def follow_handles() -> list[str]:
+    follow = load_json(FOLLOW_PATH, {"accounts": []})
+    return [
+        a["handle"].lstrip("@")
+        for a in follow.get("accounts", [])
+        if a.get("handle")
+    ]
 
 
 def enqueue_target(
@@ -88,11 +95,15 @@ def enqueue_target(
     source: str = "manual",
     author: str = "",
     note: str = "",
-) -> None:
+) -> bool:
     doc = load_json(TARGETS_PATH, {"targets": []})
-    existing = {str(t.get("tweet_id")) for t in doc.get("targets", [])}
+    existing = {
+        str(t.get("tweet_id"))
+        for t in doc.get("targets", [])
+        if t.get("status") != "done"
+    }
     if tweet_id in existing:
-        return
+        return False
     doc.setdefault("targets", []).append({
         "tweet_id": tweet_id,
         "author": author,
@@ -102,6 +113,7 @@ def enqueue_target(
         "added": date.today().isoformat(),
     })
     save_json(TARGETS_PATH, doc)
+    return True
 
 
 def mark_target_done(targets_doc: dict, tweet_id: str, reply_id: str) -> None:
@@ -113,16 +125,75 @@ def mark_target_done(targets_doc: dict, tweet_id: str, reply_id: str) -> None:
             break
 
 
-def cmd_add(url_or_id: str) -> None:
-    tweet_id = parse_tweet_id(url_or_id)
-    if not tweet_id:
-        print(f"Could not parse tweet id from: {url_or_id}", file=sys.stderr)
-        sys.exit(1)
-    enqueue_target(tweet_id, source="manual")
-    print(f"Queued comment on tweet {tweet_id}")
+def pending_targets(targets_doc: dict, seen: dict) -> list[dict]:
+    done = set(seen.get("commented_tweet_ids", []))
+    pending: list[dict] = []
+    for item in targets_doc.get("targets", []):
+        tid = str(item.get("tweet_id", "")).strip()
+        if not tid or tid in done or item.get("status") == "done":
+            continue
+        pending.append(item)
+    pending.sort(key=lambda x: SOURCE_PRIORITY.get(x.get("source", ""), 8))
+    return pending
 
 
-def run(dry_run: bool = False, force: bool = False) -> int:
+def discover_and_enqueue(seen: dict) -> tuple[int, int]:
+    """Scan mentions + contributors; return (mentions_queued, contributors_queued)."""
+    my_handle = "murmurRed"
+    try:
+        me = get_client().get_me()
+        if me.data:
+            my_handle = me.data.username
+    except Exception:
+        pass
+
+    done = set(seen.get("commented_tweet_ids", []))
+    m_queued = 0
+    c_queued = 0
+
+    mention_slots = max(0, MENTION_MAX - comments_today(seen, "mention"))
+    if mention_slots:
+        for post in discover_mentions(my_handle, max_posts=mention_slots):
+            if post["tweet_id"] in done:
+                continue
+            if post["author"].lower() == my_handle.lower():
+                continue
+            if enqueue_target(
+                post["tweet_id"],
+                source="mention",
+                author=post["author"],
+                note=post.get("text", ""),
+            ):
+                m_queued += 1
+
+    outbound_slots = max(0, OUTBOUND_MAX - comments_today(seen, "contributor"))
+    if outbound_slots:
+        handles = follow_handles()
+        for post in discover_contributor_posts(handles, max_posts=outbound_slots):
+            if post["tweet_id"] in done:
+                continue
+            if post["author"].lower() == my_handle.lower():
+                continue
+            if enqueue_target(
+                post["tweet_id"],
+                source="contributor",
+                author=post["author"],
+                note=post.get("text", ""),
+            ):
+                c_queued += 1
+
+    if m_queued or c_queued:
+        log(f"DISCOVER | queued {m_queued} mention(s), {c_queued} contributor(s)")
+    return m_queued, c_queued
+
+
+def pool_for_source(source: str, outbound: list[str], mention: list[str]) -> list[str]:
+    if source == "mention":
+        return mention or outbound
+    return outbound or mention
+
+
+def run(dry_run: bool = False, force: bool = False, discover_only: bool = False) -> int:
     if not credentials_ok():
         log("SKIP | no API keys")
         return 0
@@ -132,33 +203,46 @@ def run(dry_run: bool = False, force: bool = False) -> int:
         log(f"SKIP | before comment hour {COMMENT_HOUR}:00 {TZ}")
         return 0
 
-    pool_data = load_json(POOL_PATH, {"replies": ["👀", "this", "yep"]})
-    pool = [r.strip() for r in pool_data.get("replies", []) if r.strip()]
-    if not pool:
-        log("SKIP | empty comment pool")
+    outbound_pool = [
+        r.strip()
+        for r in load_json(OUTBOUND_POOL_PATH, {"replies": []}).get("replies", [])
+        if r.strip()
+    ]
+    mention_pool = [
+        r.strip()
+        for r in load_json(MENTION_POOL_PATH, {"replies": []}).get("replies", [])
+        if r.strip()
+    ]
+    if not outbound_pool and not mention_pool:
+        log("SKIP | empty reply pools")
+        return 0
+
+    seen = load_json(SEEN_PATH, {"commented_tweet_ids": [], "history": []})
+    discover_and_enqueue(seen)
+    if discover_only:
         return 0
 
     targets_doc = load_json(TARGETS_PATH, {"targets": []})
-    seen = load_json(SEEN_PATH, {"commented_tweet_ids": [], "history": []})
-    remaining = MAX_PER_DAY - comments_today(seen)
-    if remaining <= 0:
-        log(f"SKIP | daily cap ({MAX_PER_DAY}) reached")
-        return 0
-
     pending = pending_targets(targets_doc, seen)
     if not pending:
-        log("SKIP | no comment targets (add URLs to social/comment_targets.json)")
+        log("SKIP | no comment targets after discovery")
         return 0
 
     posted = 0
     for item in pending:
-        if posted >= remaining:
-            break
+        source = item.get("source", "manual")
+        if source == "mention" and comments_today(seen, "mention") >= MENTION_MAX:
+            continue
+        if source == "contributor" and comments_today(seen, "contributor") >= OUTBOUND_MAX:
+            continue
+        if source not in ("mention", "contributor") and comments_today(seen) >= OUTBOUND_MAX + MENTION_MAX:
+            continue
 
+        pool = pool_for_source(source, outbound_pool, mention_pool)
         tweet_id = str(item["tweet_id"])
         reply = pick_reply(tweet_id, pool)
-        label = item.get("author") or item.get("source") or tweet_id
-        log(f"COMMENT | {label} — {reply!r}")
+        label = f"@{item['author']}" if item.get("author") else source
+        log(f"COMMENT | {label} ({source}) — {reply!r}")
         reply_id = post_tweet(reply, dry_run=dry_run, reply_to=tweet_id)
 
         if reply_id or dry_run:
@@ -167,12 +251,12 @@ def run(dry_run: bool = False, force: bool = False) -> int:
                 "date": date.today().isoformat(),
                 "target_tweet_id": tweet_id,
                 "target_author": item.get("author", ""),
-                "source": item.get("source", ""),
+                "source": source,
                 "reply_text": reply,
                 "reply_tweet_id": reply_id or "dry-run",
             })
             seen["commented_tweet_ids"] = seen["commented_tweet_ids"][-500:]
-            seen["history"] = seen["history"][:100]
+            seen["history"] = seen["history"][:200]
             if not dry_run:
                 mark_target_done(targets_doc, tweet_id, reply_id or "")
                 save_json(SEEN_PATH, seen)
@@ -182,14 +266,26 @@ def run(dry_run: bool = False, force: bool = False) -> int:
     if dry_run and posted:
         log(f"DRY DONE | would comment on {posted} post(s)")
     elif posted:
+        save_json(SEEN_PATH, seen)
+        save_json(TARGETS_PATH, targets_doc)
         log(f"DONE | commented on {posted} post(s)")
     return posted
 
 
+def cmd_add(url_or_id: str) -> None:
+    tweet_id = parse_tweet_id(url_or_id)
+    if not tweet_id:
+        print(f"Could not parse tweet id from: {url_or_id}", file=sys.stderr)
+        sys.exit(1)
+    enqueue_target(tweet_id, source="manual")
+    print(f"Queued comment on tweet {tweet_id}")
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Short replies on queued X posts")
+    parser = argparse.ArgumentParser(description="Reply on contributor posts and mentions")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--force", action="store_true", help="Ignore time-of-day gate")
+    parser.add_argument("--discover-only", action="store_true", help="Scan only, do not post")
     parser.add_argument("--add", metavar="URL", help="Queue a tweet URL or ID")
     args = parser.parse_args()
 
@@ -197,7 +293,7 @@ def main() -> None:
         cmd_add(args.add)
         return
 
-    run(dry_run=args.dry_run, force=args.force)
+    run(dry_run=args.dry_run, force=args.force, discover_only=args.discover_only)
 
 
 if __name__ == "__main__":

@@ -55,6 +55,8 @@ jobs:
           COMMENT_TZ: Europe/Amsterdam
           COMMENT_HOUR: "10"
           COMMENT_MAX_PER_DAY: "5"
+          MENTION_REPLY_MAX_PER_DAY: "10"
+          COMMENT_SELF_REPLY: "false"
         run: |
           python3 x_scheduler.py post
           python3 social/x_blog_promoter.py

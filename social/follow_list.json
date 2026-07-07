@@ -24,8 +24,8 @@
   ],
   "engage_daily": 5,
   "engage_tips": [
-    "Queue replies: python3 social/x_commenter.py --add <tweet URL>",
-    "Automation posts up to 5 short replies/day from social/comment_pool.json",
-    "Own calendar posts auto-queue a follow-up reply (COMMENT_SELF_REPLY=true)"
+    "Grok scans this list daily for recent posts to reply to (max 5/day)",
+    "Grok also finds replies to @murmurRed and auto-responds (max 10/day)",
+    "Manual override: python3 social/x_commenter.py --add <tweet URL>"
   ]
 }
