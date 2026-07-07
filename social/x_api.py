@@ -85,6 +85,20 @@ def verify_connection(test_write: bool = False) -> tuple[bool, str]:
     return True, f"@{username} read+write OK"
 
 
+def engage_tweet(
+    text: str,
+    *,
+    reply_to: str | None = None,
+    mention_author: str = "",
+    dry_run: bool = False,
+) -> str | None:
+    """Reply in-thread, or @mention standalone when X blocks cold replies."""
+    if mention_author and not reply_to:
+        handle = mention_author.lstrip("@")
+        text = f"@{handle} {text}"
+    return post_tweet(text, dry_run=dry_run, reply_to=reply_to)
+
+
 def post_tweet(
     text: str,
     dry_run: bool = False,

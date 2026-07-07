@@ -31,7 +31,7 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(Path(__file__).parent))
 
-from x_api import credentials_ok, get_client, log, post_tweet  # noqa: E402
+from x_api import credentials_ok, engage_tweet, get_client, log  # noqa: E402
 from x_discover import discover_contributor_posts, discover_mentions  # noqa: E402
 
 load_dotenv(ROOT / ".env")
@@ -242,8 +242,17 @@ def run(dry_run: bool = False, force: bool = False, discover_only: bool = False)
         tweet_id = str(item["tweet_id"])
         reply = pick_reply(tweet_id, pool)
         label = f"@{item['author']}" if item.get("author") else source
-        log(f"COMMENT | {label} ({source}) — {reply!r}")
-        reply_id = post_tweet(reply, dry_run=dry_run, reply_to=tweet_id)
+        mode = "reply" if source == "mention" else "mention_tweet"
+        log(f"COMMENT | {label} ({source}/{mode}) — {reply!r}")
+        if source == "mention":
+            reply_id = engage_tweet(reply, reply_to=tweet_id, dry_run=dry_run)
+        else:
+            # X blocks cold thread replies — @mention as a standalone post instead
+            reply_id = engage_tweet(
+                reply,
+                mention_author=item.get("author", ""),
+                dry_run=dry_run,
+            )
 
         if reply_id or dry_run:
             seen.setdefault("commented_tweet_ids", []).append(tweet_id)
@@ -253,6 +262,7 @@ def run(dry_run: bool = False, force: bool = False, discover_only: bool = False)
                 "target_author": item.get("author", ""),
                 "source": source,
                 "reply_text": reply,
+                "engage_mode": mode,
                 "reply_tweet_id": reply_id or "dry-run",
             })
             seen["commented_tweet_ids"] = seen["commented_tweet_ids"][-500:]
