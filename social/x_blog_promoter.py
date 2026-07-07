@@ -112,14 +112,20 @@ def generate_teaser(title: str, excerpt: str) -> str:
     return text[:220]
 
 
+def _url_in_post() -> bool:
+    """Full https URLs cost ~$0.20/tweet vs ~$0.015 for plain text on X API."""
+    return os.getenv("BLOG_PROMO_FULL_URL", "false").lower() in ("1", "true", "yes")
+
+
 def build_post(article: dict) -> str:
     title = article["title"]
     url = article["url"]
     excerpt = fetch_blog_excerpt(url)
     teaser = generate_teaser(title, excerpt)
-    post = f"{teaser}\n\n{url}"
+    link_line = url if _url_in_post() else "murmur.red"
+    post = f"{teaser}\n\n{link_line}"
     if len(post) > 280:
-        post = f"{teaser[:200].rstrip()}…\n\n{url}"
+        post = f"{teaser[:200].rstrip()}…\n\n{link_line}"
     return post
 
 

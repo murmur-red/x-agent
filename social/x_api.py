@@ -13,6 +13,11 @@ WRITE_PERMISSION_HINT = (
     "regenerate Access Token & Secret → update GitHub secrets + .env"
 )
 
+PAYMENT_REQUIRED_HINT = (
+    "X API credits exhausted. console.x.com → purchase credits "
+    "(~$0.015/text tweet, ~$0.20/tweet with https URL)"
+)
+
 
 def log(msg: str) -> None:
     line = f"{datetime.now(timezone.utc).isoformat()} | {msg}"
@@ -43,6 +48,11 @@ def _is_write_permission_error(exc: Exception) -> bool:
     return "403" in msg or "oauth1 app permissions" in msg or "not permitted" in msg
 
 
+def _is_payment_required_error(exc: Exception) -> bool:
+    msg = str(exc).lower()
+    return "402" in msg or "payment required" in msg or "does not have any credits" in msg
+
+
 def verify_connection(test_write: bool = False) -> tuple[bool, str]:
     """Return (ok, message). get_me always; optional write probe with --write-test."""
     if not credentials_ok():
@@ -68,6 +78,8 @@ def verify_connection(test_write: bool = False) -> tuple[bool, str]:
     except Exception as e:
         if _is_write_permission_error(e):
             return False, f"@{username} cannot post. {WRITE_PERMISSION_HINT}"
+        if _is_payment_required_error(e):
+            return False, f"@{username} cannot post. {PAYMENT_REQUIRED_HINT}"
         return False, f"Write check failed: {e}"
 
     return True, f"@{username} read+write OK"
@@ -89,6 +101,8 @@ def post_tweet(text: str, dry_run: bool = False) -> str | None:
     except Exception as e:
         if _is_write_permission_error(e):
             log(f"ERROR | 403 write forbidden — {WRITE_PERMISSION_HINT}")
+        elif _is_payment_required_error(e):
+            log(f"ERROR | 402 no credits — {PAYMENT_REQUIRED_HINT}")
         else:
             log(f"ERROR | {e}")
         return None
