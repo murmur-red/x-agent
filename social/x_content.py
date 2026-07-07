@@ -71,8 +71,7 @@ HOT_TAKES: list[Post] = [
         "Every company has an AI strategy deck.\n\n"
         "Fewer have an AI *usage* graph.\n\n"
         "The gap between what you bought and what your teams actually run "
-        "is where margin, momentum, and surprise live.\n\n"
-        "murmur.red",
+        "is where margin, momentum, and surprise live.",
         "single",
     ),
     Post(
