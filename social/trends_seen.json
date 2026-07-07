@@ -1,4 +1,8 @@
 {
-  "events": [],
-  "posts_this_week": []
+  "events": [
+    "show hn: fast, native mac file manager (filters, fuzzy find, 9 mb, no electron)"
+  ],
+  "posts_this_week": [
+    "2026-07-07"
+  ]
 }
