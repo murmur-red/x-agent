@@ -1,24 +1,21 @@
 date,time_utc,week,content_type,thread_id,thread_part,post_text,media_note,status
-2026-07-08,09:00,1,single,,0,"Pilot success ≠ production adoption.
-
-The handoff from demo team to ops is where most AI budgets go to die.",,scheduled
-2026-07-08,13:00,1,single,,0,"Every company has an AI strategy deck.
+2026-07-07,11:00,1,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
-murmur.red",Launch — AI strategy vs usage graph,scheduled
-2026-07-08,17:00,1,thread,ai_usage_gap,1,"Every company bought the AI license.
+murmur.red",Go live — 13:00 Amsterdam,scheduled
+2026-07-07,17:00,1,thread,ai_usage_gap,1,"Every company bought the AI license.
 Half are barely running inference.
 
 A thread on the AI usage gap 🧵",,scheduled
-2026-07-09,09:00,1,single,,0,"Three numbers every AI ops lead should see weekly:
+2026-07-08,09:00,1,single,,0,"Three numbers every AI ops lead should see weekly:
 
 1. Inference MoM %
 2. Active users / licensed seats
 3. Cost per successful workflow run",,scheduled
-2026-07-09,13:00,1,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
+2026-07-08,13:00,1,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
 
 Licensed spend:  $2.5M
 Actual usage:    $2.11M run-rate
@@ -26,64 +23,64 @@ Idle gap:        $390K
 Fading:          2 of 5
 
 15.6% of your AI budget might be ambient noise.",screenshot index.html telemetry cards,scheduled
-2026-07-09,21:00,1,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-08,21:00,1,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-10,09:00,1,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
+2026-07-09,09:00,1,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
 
 Your inference graph will.",,scheduled
-2026-07-10,13:00,1,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-07-09,13:00,1,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-07-10,17:00,1,single,,0,"If nobody owns the AI workflow after go-live,
+2026-07-09,17:00,1,single,,0,"If nobody owns the AI workflow after go-live,
 inference decay isn't a surprise — it's the default.",,scheduled
-2026-07-10,21:00,1,single,,0,"Drop the AI tool your company bought but barely uses.
+2026-07-09,21:00,1,single,,0,"Drop the AI tool your company bought but barely uses.
 
 I'll start: enterprise platform, -46% inference over 6 months, internal replacement built quietly. Dashboard still green. 💀",,scheduled
-2026-07-11,09:00,1,single,,0,"Shelfware isn't cancelled software.
+2026-07-10,09:00,1,single,,0,"Shelfware isn't cancelled software.
 
 It's software still on the invoice while the team routes around it.",,scheduled
-2026-07-11,13:00,1,single,,0,"Shipped: generator-critic loop on usage data.
+2026-07-10,13:00,1,single,,0,"Shipped: generator-critic loop on usage data.
 
 Claude reads the numbers → critic attacks the take → revise with evidence.
 
 No more 'looks healthy' without citing inference, MoM %, or day count.",,scheduled
-2026-07-12,09:00,1,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
+2026-07-11,09:00,1,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
 
 That's not stability. That's fading adoption.",,scheduled
-2026-07-12,17:00,1,single,,0,"Your inference bill is a honesty meter.
+2026-07-11,17:00,1,single,,0,"Your inference bill is a honesty meter.
 
 Spike = people found a workflow that works.
 Flatline = shelfware with a logo on it.
 
 Tokens don't care about your press release.",,scheduled
-2026-07-12,21:00,1,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-11,21:00,1,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-13,09:00,1,single,,0,"AI procurement asks: 'What did we buy?'
+2026-07-12,09:00,1,single,,0,"AI procurement asks: 'What did we buy?'
 
 AI ops should ask: 'What still runs on Monday morning?'",,scheduled
-2026-07-13,13:00,1,single,,0,"The 90-day pattern:
+2026-07-12,13:00,1,single,,0,"The 90-day pattern:
 
 If inference drops >15% while the contract still runs,
 the tool didn't fail — the workflow did.
 
 Catch it in ops review. Not at the board slide.",,scheduled
-2026-07-14,09:00,1,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
-2026-07-14,17:00,1,single,,0,"The best AI rollout signal isn't a launch tweet.
+2026-07-13,09:00,1,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
+2026-07-13,17:00,1,single,,0,"The best AI rollout signal isn't a launch tweet.
 
 It's whether usage holds 90 days after the press release.",,scheduled
-2026-07-14,21:00,1,poll,,0,"What's the first sign AI adoption is fading?
+2026-07-13,21:00,1,poll,,0,"What's the first sign AI adoption is fading?
 
 🔴 Inference decay
 🟡 Workflow owner left
 🟢 Active users dropping
 ⚫ 'We're still exploring use cases'",,scheduled
-2026-07-15,09:00,2,single,,0,"If nobody owns the AI workflow after go-live,
+2026-07-14,09:00,2,single,,0,"If nobody owns the AI workflow after go-live,
 inference decay isn't a surprise — it's the default.",,scheduled
-2026-07-15,13:00,2,single,,0,"Plot twist: the company didn't cancel AI.
+2026-07-14,13:00,2,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -92,32 +89,32 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-07-15,21:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-14,21:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-16,09:00,2,single,,0,"Companies track AI licenses.
+2026-07-15,09:00,2,single,,0,"Companies track AI licenses.
 
 Few track whether anyone still calls the API on a random Tuesday.",,scheduled
-2026-07-16,13:00,2,thread,ai_ops_playbook,1,"Most AI rollouts die after the demo video.
+2026-07-15,13:00,2,thread,ai_ops_playbook,1,"Most AI rollouts die after the demo video.
 
 Here's the ops playbook that keeps inference alive 🧵",,scheduled
-2026-07-16,17:00,2,thread,ai_ops_playbook,3,"2/ The 85% usage rule.
+2026-07-15,17:00,2,thread,ai_ops_playbook,3,"2/ The 85% usage rule.
 
 Actual consumption / licensed spend < 0.85?
 Something changed in how the company runs AI.
 Find out what before the next budget cycle.",,scheduled
-2026-07-17,09:00,2,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
-2026-07-17,13:00,2,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-07-16,09:00,2,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
+2026-07-16,13:00,2,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-07-18,09:00,2,single,,0,"Good AI ops isn't more dashboards.
+2026-07-17,09:00,2,single,,0,"Good AI ops isn't more dashboards.
 
 It's one honest graph: licensed spend vs actual inference.",,scheduled
-2026-07-18,17:00,2,single,,0,"Plot twist: the company didn't cancel AI.
+2026-07-17,17:00,2,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -126,63 +123,63 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-07-18,21:00,2,single,,0,"Build vs buy AI is the wrong frame.
+2026-07-17,21:00,2,single,,0,"Build vs buy AI is the wrong frame.
 
 The real question: build vs buy vs *actually operate*.
 
 Most companies nail procurement.
 Almost nobody owns the ops layer after go-live.",,scheduled
-2026-07-19,09:00,2,single,,0,"The best AI rollout signal isn't a launch tweet.
+2026-07-18,09:00,2,single,,0,"The best AI rollout signal isn't a launch tweet.
 
 It's whether usage holds 90 days after the press release.",,scheduled
-2026-07-19,13:00,2,single,,0,"We cross-check every company against public registries.
+2026-07-18,13:00,2,single,,0,"We cross-check every company against public registries.
 
 Identity health for B2B AI contracts.
 Because sometimes the org paying for inference doesn't legally exist anymore.
 
 🇳🇱 Registry data > gut feel.",,scheduled
-2026-07-20,09:00,2,single,,0,"Every company has an AI strategy deck.
+2026-07-19,09:00,2,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
 murmur.red",,scheduled
-2026-07-20,17:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-19,17:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-21,09:00,2,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-07-20,09:00,2,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-07-21,13:00,2,poll,,0,"Honest question for ops leaders:
+2026-07-20,13:00,2,poll,,0,"Honest question for ops leaders:
 
 Does your AI spend match actual usage?
 
 📊 Yes — we track inference
 😬 Sometimes — we catch it late
 💀 No idea — we track the contract",,scheduled
-2026-07-21,21:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-20,21:00,2,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-22,09:00,3,single,,0,"Your inference bill is a honesty meter.
+2026-07-21,09:00,3,single,,0,"Your inference bill is a honesty meter.
 
 Spike = people found a workflow that works.
 Flatline = shelfware with a logo on it.
 
 Tokens don't care about your press release.",,scheduled
-2026-07-22,13:00,3,thread,company_bbb,1,"🏭 Company story (demo data, anonymized):
+2026-07-21,13:00,3,thread,company_bbb,1,"🏭 Company story (demo data, anonymized):
 
 Media company. Big AI platform contract.
 This is what fading adoption actually looks like 🧵",,scheduled
-2026-07-22,17:00,3,thread,company_bbb,2,"Month 1: $520K contract. 100 inference units. 100 seats.
+2026-07-21,17:00,3,thread,company_bbb,2,"Month 1: $520K contract. 100 inference units. 100 seats.
 Month 6: 54 units. 41 active users.
 
 Ops dashboard: 🟢 fine
 Support volume: high
 Workflow owner: gone",,scheduled
-2026-07-23,09:00,3,single,,0,"Plot twist: the company didn't cancel AI.
+2026-07-22,09:00,3,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -191,43 +188,43 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-07-23,13:00,3,thread,company_bbb,3,"The team didn't quit AI loudly.
+2026-07-22,13:00,3,thread,company_bbb,3,"The team didn't quit AI loudly.
 They just... routed around it.
 
 Internal tool absorbed the workflow.
 API calls dropped. Nobody updated the runbook.",,scheduled
-2026-07-23,17:00,3,thread,company_bbb,4,"Registry check: legal entity flagged dissolved.
+2026-07-22,17:00,3,thread,company_bbb,4,"Registry check: legal entity flagged dissolved.
 
 Contract still running.
 Inference still decaying.
 Budget line still full.
 
 Three dashboards. Three stories.",,scheduled
-2026-07-24,09:00,3,single,,0,"Build vs buy AI is the wrong frame.
+2026-07-23,09:00,3,single,,0,"Build vs buy AI is the wrong frame.
 
 The real question: build vs buy vs *actually operate*.
 
 Most companies nail procurement.
 Almost nobody owns the ops layer after go-live.",,scheduled
-2026-07-24,13:00,3,thread,company_bbb,5,"The lesson:
+2026-07-23,13:00,3,thread,company_bbb,5,"The lesson:
 
 Buying AI ≠ operating AI.
 Watch inference. Watch ownership. Watch identity.
 
 murmur.red — usage telemetry for companies that ship AI.",,scheduled
-2026-07-24,17:00,3,single,,0,"Three numbers every AI ops lead should see weekly:
+2026-07-23,17:00,3,single,,0,"Three numbers every AI ops lead should see weekly:
 
 1. Inference MoM %
 2. Active users / licensed seats
 3. Cost per successful workflow run",,scheduled
-2026-07-24,21:00,3,single,,0,"Every company has an AI strategy deck.
+2026-07-23,21:00,3,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
 murmur.red",Repost — new audience,scheduled
-2026-07-25,09:00,3,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
+2026-07-24,09:00,3,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
 
 Licensed spend:  $2.5M
 Actual usage:    $2.11M run-rate
@@ -235,7 +232,7 @@ Idle gap:        $390K
 Fading:          2 of 5
 
 15.6% of your AI budget might be ambient noise.",screenshot index.html telemetry cards,scheduled
-2026-07-25,13:00,3,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
+2026-07-24,13:00,3,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
 
 Licensed spend:  $2.5M
 Actual usage:    $2.11M run-rate
@@ -243,132 +240,132 @@ Idle gap:        $390K
 Fading:          2 of 5
 
 15.6% of your AI budget might be ambient noise.",screenshot index.html telemetry cards,scheduled
-2026-07-26,09:00,3,single,,0,"The 90-day pattern:
+2026-07-25,09:00,3,single,,0,"The 90-day pattern:
 
 If inference drops >15% while the contract still runs,
 the tool didn't fail — the workflow did.
 
 Catch it in ops review. Not at the board slide.",,scheduled
-2026-07-26,17:00,3,single,,0,"Building in public: usage telemetry for AI-powered companies.
+2026-07-25,17:00,3,single,,0,"Building in public: usage telemetry for AI-powered companies.
 
 Demo portfolio: $2.5M licensed, $390K idle gap.
 
 What should we instrument next? 👇",,scheduled
-2026-07-27,09:00,3,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-07-26,09:00,3,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-07-27,13:00,3,single,,0,"New page: economics of running AI inside a company.
+2026-07-26,13:00,3,single,,0,"New page: economics of running AI inside a company.
 
 Headcount vs revenue vs inference cost.
 What you can actually afford to operate.
 Break-even with fading adoption baked in.
 
 murmur.red",,scheduled
-2026-07-27,21:00,3,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-26,21:00,3,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-28,09:00,3,single,,0,"Pilot success ≠ production adoption.
+2026-07-27,09:00,3,single,,0,"Pilot success ≠ production adoption.
 
 The handoff from demo team to ops is where most AI budgets go to die.",,scheduled
-2026-07-28,17:00,3,single,,0,"AI procurement asks: 'What did we buy?'
+2026-07-27,17:00,3,single,,0,"AI procurement asks: 'What did we buy?'
 
 AI ops should ask: 'What still runs on Monday morning?'",,scheduled
-2026-07-28,21:00,3,poll,,0,"Where is your company on AI right now?
+2026-07-27,21:00,3,poll,,0,"Where is your company on AI right now?
 
 🧪 Piloting
 📈 Scaling what works
 💸 Paying for shelfware
 🔧 Building in-house instead",,scheduled
-2026-07-29,09:00,4,single,,0,"Three numbers every AI ops lead should see weekly:
+2026-07-28,09:00,4,single,,0,"Three numbers every AI ops lead should see weekly:
 
 1. Inference MoM %
 2. Active users / licensed seats
 3. Cost per successful workflow run",,scheduled
-2026-07-29,13:00,4,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-07-28,13:00,4,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",Evergreen repost,scheduled
-2026-07-30,09:00,4,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
+2026-07-29,09:00,4,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
 
 Your inference graph will.",,scheduled
-2026-07-30,13:00,4,single,,0,"The 90-day pattern:
+2026-07-29,13:00,4,single,,0,"The 90-day pattern:
 
 If inference drops >15% while the contract still runs,
 the tool didn't fail — the workflow did.
 
 Catch it in ops review. Not at the board slide.",,scheduled
-2026-07-30,17:00,4,single,,0,"If nobody owns the AI workflow after go-live,
+2026-07-29,17:00,4,single,,0,"If nobody owns the AI workflow after go-live,
 inference decay isn't a surprise — it's the default.",,scheduled
-2026-07-30,21:00,4,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-07-29,21:00,4,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-07-31,09:00,4,single,,0,"Shelfware isn't cancelled software.
+2026-07-30,09:00,4,single,,0,"Shelfware isn't cancelled software.
 
 It's software still on the invoice while the team routes around it.",,scheduled
-2026-07-31,17:00,4,single,,0,"Drop the AI tool your company bought but barely uses.
+2026-07-30,17:00,4,single,,0,"Drop the AI tool your company bought but barely uses.
 
 I'll start: enterprise platform, -46% inference over 6 months, internal replacement built quietly. Dashboard still green. 💀",,scheduled
-2026-08-01,09:00,4,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
+2026-07-31,09:00,4,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
 
 That's not stability. That's fading adoption.",,scheduled
-2026-08-01,13:00,4,single,,0,"Shipped: generator-critic loop on usage data.
+2026-07-31,13:00,4,single,,0,"Shipped: generator-critic loop on usage data.
 
 Claude reads the numbers → critic attacks the take → revise with evidence.
 
 No more 'looks healthy' without citing inference, MoM %, or day count.",,scheduled
-2026-08-01,17:00,4,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
-2026-08-02,09:00,4,single,,0,"AI procurement asks: 'What did we buy?'
+2026-07-31,17:00,4,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
+2026-08-01,09:00,4,single,,0,"AI procurement asks: 'What did we buy?'
 
 AI ops should ask: 'What still runs on Monday morning?'",,scheduled
-2026-08-02,21:00,4,poll,,0,"What's the first sign AI adoption is fading?
+2026-08-01,21:00,4,poll,,0,"What's the first sign AI adoption is fading?
 
 🔴 Inference decay
 🟡 Workflow owner left
 🟢 Active users dropping
 ⚫ 'We're still exploring use cases'",,scheduled
-2026-08-03,09:00,4,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
-2026-08-03,13:00,4,single,,0,"Build vs buy AI is the wrong frame.
+2026-08-02,09:00,4,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
+2026-08-02,13:00,4,single,,0,"Build vs buy AI is the wrong frame.
 
 The real question: build vs buy vs *actually operate*.
 
 Most companies nail procurement.
 Almost nobody owns the ops layer after go-live.",,scheduled
-2026-08-03,17:00,4,single,,0,"The best AI rollout signal isn't a launch tweet.
+2026-08-02,17:00,4,single,,0,"The best AI rollout signal isn't a launch tweet.
 
 It's whether usage holds 90 days after the press release.",,scheduled
-2026-08-04,09:00,4,single,,0,"If nobody owns the AI workflow after go-live,
+2026-08-03,09:00,4,single,,0,"If nobody owns the AI workflow after go-live,
 inference decay isn't a surprise — it's the default.",,scheduled
-2026-08-04,17:00,4,single,,0,"Building in public: usage telemetry for AI-powered companies.
+2026-08-03,17:00,4,single,,0,"Building in public: usage telemetry for AI-powered companies.
 
 Demo portfolio: $2.5M licensed, $390K idle gap.
 
 What should we instrument next? 👇",,scheduled
-2026-08-05,09:00,5,single,,0,"Companies track AI licenses.
+2026-08-04,09:00,5,single,,0,"Companies track AI licenses.
 
 Few track whether anyone still calls the API on a random Tuesday.",,scheduled
-2026-08-05,17:00,5,thread,ai_usage_gap,1,"Every company bought the AI license.
+2026-08-04,17:00,5,thread,ai_usage_gap,1,"Every company bought the AI license.
 Half are barely running inference.
 
 A thread on the AI usage gap 🧵",,scheduled
-2026-08-05,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-04,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-06,09:00,5,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
-2026-08-06,13:00,5,single,,0,"Your inference bill is a honesty meter.
+2026-08-05,09:00,5,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
+2026-08-05,13:00,5,single,,0,"Your inference bill is a honesty meter.
 
 Spike = people found a workflow that works.
 Flatline = shelfware with a logo on it.
 
 Tokens don't care about your press release.",,scheduled
-2026-08-07,09:00,5,single,,0,"Good AI ops isn't more dashboards.
+2026-08-06,09:00,5,single,,0,"Good AI ops isn't more dashboards.
 
 It's one honest graph: licensed spend vs actual inference.",,scheduled
-2026-08-07,17:00,5,single,,0,"Plot twist: the company didn't cancel AI.
+2026-08-06,17:00,5,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -377,64 +374,64 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-08-07,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-06,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-08,09:00,5,single,,0,"The best AI rollout signal isn't a launch tweet.
+2026-08-07,09:00,5,single,,0,"The best AI rollout signal isn't a launch tweet.
 
 It's whether usage holds 90 days after the press release.",,scheduled
-2026-08-08,13:00,5,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-08-07,13:00,5,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-08-08,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-07,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-09,09:00,5,single,,0,"Every company has an AI strategy deck.
+2026-08-08,09:00,5,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
 murmur.red",,scheduled
-2026-08-09,17:00,5,single,,0,"We cross-check every company against public registries.
+2026-08-08,17:00,5,single,,0,"We cross-check every company against public registries.
 
 Identity health for B2B AI contracts.
 Because sometimes the org paying for inference doesn't legally exist anymore.
 
 🇳🇱 Registry data > gut feel.",,scheduled
-2026-08-10,09:00,5,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-08-09,09:00,5,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-08-10,21:00,5,poll,,0,"Honest question for ops leaders:
+2026-08-09,21:00,5,poll,,0,"Honest question for ops leaders:
 
 Does your AI spend match actual usage?
 
 📊 Yes — we track inference
 😬 Sometimes — we catch it late
 💀 No idea — we track the contract",,scheduled
-2026-08-11,09:00,5,single,,0,"Your inference bill is a honesty meter.
+2026-08-10,09:00,5,single,,0,"Your inference bill is a honesty meter.
 
 Spike = people found a workflow that works.
 Flatline = shelfware with a logo on it.
 
 Tokens don't care about your press release.",,scheduled
-2026-08-11,17:00,5,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-08-10,17:00,5,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-08-11,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-10,21:00,5,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-12,09:00,6,single,,0,"Plot twist: the company didn't cancel AI.
+2026-08-11,09:00,6,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -443,21 +440,21 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-08-12,13:00,6,thread,ai_ops_playbook,1,"Most AI rollouts die after the demo video.
+2026-08-11,13:00,6,thread,ai_ops_playbook,1,"Most AI rollouts die after the demo video.
 
 Here's the ops playbook that keeps inference alive 🧵",,scheduled
-2026-08-12,17:00,6,thread,ai_ops_playbook,3,"2/ The 85% usage rule.
+2026-08-11,17:00,6,thread,ai_ops_playbook,3,"2/ The 85% usage rule.
 
 Actual consumption / licensed spend < 0.85?
 Something changed in how the company runs AI.
 Find out what before the next budget cycle.",,scheduled
-2026-08-13,09:00,6,single,,0,"Build vs buy AI is the wrong frame.
+2026-08-12,09:00,6,single,,0,"Build vs buy AI is the wrong frame.
 
 The real question: build vs buy vs *actually operate*.
 
 Most companies nail procurement.
 Almost nobody owns the ops layer after go-live.",,scheduled
-2026-08-13,13:00,6,single,,0,"Plot twist: the company didn't cancel AI.
+2026-08-12,13:00,6,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -466,12 +463,12 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-08-13,17:00,6,single,,0,"Three numbers every AI ops lead should see weekly:
+2026-08-12,17:00,6,single,,0,"Three numbers every AI ops lead should see weekly:
 
 1. Inference MoM %
 2. Active users / licensed seats
 3. Cost per successful workflow run",,scheduled
-2026-08-14,09:00,6,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
+2026-08-13,09:00,6,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
 
 Licensed spend:  $2.5M
 Actual usage:    $2.11M run-rate
@@ -479,7 +476,7 @@ Idle gap:        $390K
 Fading:          2 of 5
 
 15.6% of your AI budget might be ambient noise.",screenshot index.html telemetry cards,scheduled
-2026-08-14,21:00,6,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
+2026-08-13,21:00,6,single,,0,"📊 AI usage telemetry (demo portfolio, real math):
 
 Licensed spend:  $2.5M
 Actual usage:    $2.11M run-rate
@@ -487,143 +484,143 @@ Idle gap:        $390K
 Fading:          2 of 5
 
 15.6% of your AI budget might be ambient noise.",screenshot index.html telemetry cards,scheduled
-2026-08-15,09:00,6,single,,0,"The 90-day pattern:
+2026-08-14,09:00,6,single,,0,"The 90-day pattern:
 
 If inference drops >15% while the contract still runs,
 the tool didn't fail — the workflow did.
 
 Catch it in ops review. Not at the board slide.",,scheduled
-2026-08-15,13:00,6,single,,0,"Building in public: usage telemetry for AI-powered companies.
+2026-08-14,13:00,6,single,,0,"Building in public: usage telemetry for AI-powered companies.
 
 Demo portfolio: $2.5M licensed, $390K idle gap.
 
 What should we instrument next? 👇",,scheduled
-2026-08-15,17:00,6,single,,0,"Shelfware isn't cancelled software.
+2026-08-14,17:00,6,single,,0,"Shelfware isn't cancelled software.
 
 It's software still on the invoice while the team routes around it.",,scheduled
-2026-08-16,09:00,6,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-08-15,09:00,6,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-08-16,17:00,6,single,,0,"New page: economics of running AI inside a company.
+2026-08-15,17:00,6,single,,0,"New page: economics of running AI inside a company.
 
 Headcount vs revenue vs inference cost.
 What you can actually afford to operate.
 Break-even with fading adoption baked in.
 
 murmur.red",,scheduled
-2026-08-17,09:00,6,single,,0,"Pilot success ≠ production adoption.
+2026-08-16,09:00,6,single,,0,"Pilot success ≠ production adoption.
 
 The handoff from demo team to ops is where most AI budgets go to die.",,scheduled
-2026-08-17,17:00,6,single,,0,"AI procurement asks: 'What did we buy?'
+2026-08-16,17:00,6,single,,0,"AI procurement asks: 'What did we buy?'
 
 AI ops should ask: 'What still runs on Monday morning?'",,scheduled
-2026-08-17,21:00,6,poll,,0,"Where is your company on AI right now?
+2026-08-16,21:00,6,poll,,0,"Where is your company on AI right now?
 
 🧪 Piloting
 📈 Scaling what works
 💸 Paying for shelfware
 🔧 Building in-house instead",,scheduled
-2026-08-18,09:00,6,single,,0,"Three numbers every AI ops lead should see weekly:
+2026-08-17,09:00,6,single,,0,"Three numbers every AI ops lead should see weekly:
 
 1. Inference MoM %
 2. Active users / licensed seats
 3. Cost per successful workflow run",,scheduled
-2026-08-19,09:00,7,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
+2026-08-18,09:00,7,single,,0,"Your AI vendor's NPS survey won't tell you the workflow died.
 
 Your inference graph will.",,scheduled
-2026-08-19,13:00,7,thread,company_bbb,1,"🏭 Company story (demo data, anonymized):
+2026-08-18,13:00,7,thread,company_bbb,1,"🏭 Company story (demo data, anonymized):
 
 Media company. Big AI platform contract.
 This is what fading adoption actually looks like 🧵",,scheduled
-2026-08-19,17:00,7,thread,company_bbb,2,"Month 1: $520K contract. 100 inference units. 100 seats.
+2026-08-18,17:00,7,thread,company_bbb,2,"Month 1: $520K contract. 100 inference units. 100 seats.
 Month 6: 54 units. 41 active users.
 
 Ops dashboard: 🟢 fine
 Support volume: high
 Workflow owner: gone",,scheduled
-2026-08-20,09:00,7,single,,0,"Shelfware isn't cancelled software.
+2026-08-19,09:00,7,single,,0,"Shelfware isn't cancelled software.
 
 It's software still on the invoice while the team routes around it.",,scheduled
-2026-08-20,13:00,7,thread,company_bbb,3,"The team didn't quit AI loudly.
+2026-08-19,13:00,7,thread,company_bbb,3,"The team didn't quit AI loudly.
 They just... routed around it.
 
 Internal tool absorbed the workflow.
 API calls dropped. Nobody updated the runbook.",,scheduled
-2026-08-20,17:00,7,thread,company_bbb,4,"Registry check: legal entity flagged dissolved.
+2026-08-19,17:00,7,thread,company_bbb,4,"Registry check: legal entity flagged dissolved.
 
 Contract still running.
 Inference still decaying.
 Budget line still full.
 
 Three dashboards. Three stories.",,scheduled
-2026-08-20,21:00,7,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-19,21:00,7,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-21,09:00,7,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
+2026-08-20,09:00,7,single,,0,"The quiet killer: same contract, fewer API calls, no incident ticket.
 
 That's not stability. That's fading adoption.",,scheduled
-2026-08-21,13:00,7,thread,company_bbb,5,"The lesson:
+2026-08-20,13:00,7,thread,company_bbb,5,"The lesson:
 
 Buying AI ≠ operating AI.
 Watch inference. Watch ownership. Watch identity.
 
 murmur.red — usage telemetry for companies that ship AI.",,scheduled
-2026-08-21,17:00,7,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
-2026-08-21,21:00,7,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-08-20,17:00,7,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
+2026-08-20,21:00,7,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-08-22,09:00,7,single,,0,"AI procurement asks: 'What did we buy?'
+2026-08-21,09:00,7,single,,0,"AI procurement asks: 'What did we buy?'
 
 AI ops should ask: 'What still runs on Monday morning?'",,scheduled
-2026-08-22,13:00,7,single,,0,"The 90-day pattern:
+2026-08-21,13:00,7,single,,0,"The 90-day pattern:
 
 If inference drops >15% while the contract still runs,
 the tool didn't fail — the workflow did.
 
 Catch it in ops review. Not at the board slide.",,scheduled
-2026-08-23,09:00,7,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
-2026-08-23,17:00,7,single,,0,"Drop the AI tool your company bought but barely uses.
+2026-08-22,09:00,7,single,,0,Token spend without workflow ownership is just expensive hope.,,scheduled
+2026-08-22,17:00,7,single,,0,"Drop the AI tool your company bought but barely uses.
 
 I'll start: enterprise platform, -46% inference over 6 months, internal replacement built quietly. Dashboard still green. 💀",,scheduled
-2026-08-23,21:00,7,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-22,21:00,7,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-24,09:00,7,single,,0,"If nobody owns the AI workflow after go-live,
+2026-08-23,09:00,7,single,,0,"If nobody owns the AI workflow after go-live,
 inference decay isn't a surprise — it's the default.",,scheduled
-2026-08-24,13:00,7,single,,0,"Shipped: generator-critic loop on usage data.
+2026-08-23,13:00,7,single,,0,"Shipped: generator-critic loop on usage data.
 
 Claude reads the numbers → critic attacks the take → revise with evidence.
 
 No more 'looks healthy' without citing inference, MoM %, or day count.",,scheduled
-2026-08-25,09:00,7,single,,0,"Companies track AI licenses.
+2026-08-24,09:00,7,single,,0,"Companies track AI licenses.
 
 Few track whether anyone still calls the API on a random Tuesday.",,scheduled
-2026-08-25,17:00,7,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-08-24,17:00,7,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-08-26,09:00,8,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
-2026-08-26,13:00,8,single,,0,"Every company has an AI strategy deck.
+2026-08-25,09:00,8,single,,0,"Week 9 problem: pilot team moved on, dashboard still green, budget still committed, usage already sliding.",,scheduled
+2026-08-25,13:00,8,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
 murmur.red",Month-2 evergreen,scheduled
-2026-08-26,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-25,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-27,09:00,8,single,,0,"Good AI ops isn't more dashboards.
+2026-08-26,09:00,8,single,,0,"Good AI ops isn't more dashboards.
 
 It's one honest graph: licensed spend vs actual inference.",,scheduled
-2026-08-27,17:00,8,single,,0,"Plot twist: the company didn't cancel AI.
+2026-08-26,17:00,8,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -632,66 +629,66 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-08-27,21:00,8,poll,,0,"What's the first sign AI adoption is fading?
+2026-08-26,21:00,8,poll,,0,"What's the first sign AI adoption is fading?
 
 🔴 Inference decay
 🟡 Workflow owner left
 🟢 Active users dropping
 ⚫ 'We're still exploring use cases'",,scheduled
-2026-08-28,09:00,8,single,,0,"The best AI rollout signal isn't a launch tweet.
+2026-08-27,09:00,8,single,,0,"The best AI rollout signal isn't a launch tweet.
 
 It's whether usage holds 90 days after the press release.",,scheduled
-2026-08-28,13:00,8,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-08-27,13:00,8,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-08-29,09:00,8,single,,0,"Every company has an AI strategy deck.
+2026-08-28,09:00,8,single,,0,"Every company has an AI strategy deck.
 
 Fewer have an AI *usage* graph.
 
 The gap between what you bought and what your teams actually run is where margin, momentum, and surprise live.
 
 murmur.red",,scheduled
-2026-08-29,17:00,8,single,,0,"Build vs buy AI is the wrong frame.
+2026-08-28,17:00,8,single,,0,"Build vs buy AI is the wrong frame.
 
 The real question: build vs buy vs *actually operate*.
 
 Most companies nail procurement.
 Almost nobody owns the ops layer after go-live.",,scheduled
-2026-08-29,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-28,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-30,09:00,8,single,,0,"Hot take: the AI rollout isn't failing in the demo.
+2026-08-29,09:00,8,single,,0,"Hot take: the AI rollout isn't failing in the demo.
 
 It's failing in week 9 — when the pilot team moves on, the API key stays active, and nobody checks the dashboard.
 
 Usage telemetry > launch announcement.",,scheduled
-2026-08-30,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
+2026-08-29,21:00,8,single,,0,"Ops people — what do you wish leadership actually measured on AI?
 
 (Mine: inference trend. Not slide count.)",,scheduled
-2026-08-31,09:00,8,single,,0,"Your inference bill is a honesty meter.
+2026-08-30,09:00,8,single,,0,"Your inference bill is a honesty meter.
 
 Spike = people found a workflow that works.
 Flatline = shelfware with a logo on it.
 
 Tokens don't care about your press release.",,scheduled
-2026-08-31,13:00,8,single,,0,"We cross-check every company against public registries.
+2026-08-30,13:00,8,single,,0,"We cross-check every company against public registries.
 
 Identity health for B2B AI contracts.
 Because sometimes the org paying for inference doesn't legally exist anymore.
 
 🇳🇱 Registry data > gut feel.",,scheduled
-2026-08-31,17:00,8,single,,0,"MoM inference velocity: -2% sounds tiny.
+2026-08-30,17:00,8,single,,0,"MoM inference velocity: -2% sounds tiny.
 
 Over 6 months on a $520K AI platform?
 That's a quarter-million in usage that evaporated.
 Procurement still shows full contract.
 
 Paper vs reality.",,scheduled
-2026-09-01,09:00,8,single,,0,"Plot twist: the company didn't cancel AI.
+2026-08-31,09:00,8,single,,0,"Plot twist: the company didn't cancel AI.
 
 They just stopped calling it.
 
@@ -700,7 +697,7 @@ Dashboard still green ✅
 Inference down 46% over 6 months ❌
 
 Different problem. Different fix.",,scheduled
-2026-09-01,21:00,8,poll,,0,"Where is your company on AI right now?
+2026-08-31,21:00,8,poll,,0,"Where is your company on AI right now?
 
 🧪 Piloting
 📈 Scaling what works

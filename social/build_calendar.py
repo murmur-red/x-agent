@@ -18,6 +18,7 @@ from x_content import (
 )
 
 SLOT_TIMES = {
+    "launch": "11:00",  # 13:00 Europe/Amsterdam (CEST)
     "early": "09:00",
     "morning": "13:00",
     "noon": "17:00",
@@ -58,7 +59,7 @@ def _schedule(start: date) -> list[dict]:
 
     # --- Weeks 1–4: anchor content (threads, polls, launches) ---
     w = 1
-    add(0, "morning", HOT_TAKES[0], w, "Launch — AI strategy vs usage graph")
+    add(0, "launch", HOT_TAKES[0], w, "Go live — 13:00 Amsterdam")
     lay_thread(0, "noon", "ai_usage_gap", w)
     add(1, "morning", DATA_DROPS[0], w, "Telemetry screenshot")
     add(2, "morning", HOT_TAKES[1], w)
@@ -135,6 +136,8 @@ def _schedule(start: date) -> list[dict]:
     fillers = QUICK_TAKES + HOT_TAKES + DATA_DROPS
     for day in range(NUM_WEEKS * 7):
         week = day // 7 + 1
+        if day == 0:
+            continue  # launch day: 11:00 Amsterdam only (no early filler)
         add(day, "early", fillers[day % len(fillers)], week)
         if day % 2 == 0:
             add(day, "noon", fillers[(day + 5) % len(fillers)], week)
@@ -146,7 +149,7 @@ def _schedule(start: date) -> list[dict]:
 
 
 def main(start: date | None = None) -> Path:
-    start = start or date.today() + timedelta(days=1)
+    start = start or date.today()
     rows = _schedule(start)
     fieldnames = [
         "date", "time_utc", "week", "content_type", "thread_id",
