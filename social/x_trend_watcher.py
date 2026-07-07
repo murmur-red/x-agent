@@ -146,9 +146,9 @@ def _hn_query(query: str, min_points: int) -> dict | None:
         points = int(hit.get("points") or 0)
         if points < min_points:
             continue
-            created = datetime.fromtimestamp(hit["created_at_i"], tz=timezone.utc)
-            if datetime.now(timezone.utc) - created > timedelta(hours=18):
-                continue
+        created = datetime.fromtimestamp(hit["created_at_i"], tz=timezone.utc)
+        if datetime.now(timezone.utc) - created > timedelta(hours=18):
+            continue
         return {
             "event": hit["title"][:80],
             "summary": f"HN story with {points} points. {hit.get('url', '')}",
