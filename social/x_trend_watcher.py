@@ -118,24 +118,26 @@ def _scan_hackernews() -> dict | None:
     """Fallback: top HN AI stories with high engagement."""
     try:
         r = httpx.get(
-            "https://hn.algolia.com/api/v1/search",
+            "https://hn.algolia.com/api/v1/search_by_date",
             params={
-                "query": "AI OR OpenAI OR Claude OR Gemini OR LLM",
+                "query": "OpenAI",
                 "tags": "story",
-                "numericFilters": "points>200",
-                "hitsPerPage": 5,
+                "hitsPerPage": 10,
             },
             timeout=20,
         )
         r.raise_for_status()
         hits = r.json().get("hits", [])
         for hit in hits:
+            points = int(hit.get("points") or 0)
+            if points < 100:
+                continue
             created = datetime.fromtimestamp(hit["created_at_i"], tz=timezone.utc)
             if datetime.now(timezone.utc) - created > timedelta(hours=18):
                 continue
             return {
                 "event": hit["title"][:80],
-                "summary": f"Trending on HN with {hit['points']} points. {hit.get('url', '')}",
+                "summary": f"HN story with {points} points. {hit.get('url', '')}",
                 "significance": "medium",
             }
     except Exception as e:

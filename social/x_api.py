@@ -8,6 +8,11 @@ from pathlib import Path
 
 LOG_PATH = Path(__file__).parent / "post.log"
 
+WRITE_PERMISSION_HINT = (
+    "X token is read-only. developer.x.com → your app → Read and Write → "
+    "regenerate Access Token & Secret → update GitHub secrets + .env"
+)
+
 
 def log(msg: str) -> None:
     line = f"{datetime.now(timezone.utc).isoformat()} | {msg}"
@@ -33,6 +38,41 @@ def get_client():
     )
 
 
+def _is_write_permission_error(exc: Exception) -> bool:
+    msg = str(exc).lower()
+    return "403" in msg or "oauth1 app permissions" in msg or "not permitted" in msg
+
+
+def verify_connection(test_write: bool = False) -> tuple[bool, str]:
+    """Return (ok, message). get_me always; optional write probe with --write-test."""
+    if not credentials_ok():
+        return False, "Missing X API keys"
+
+    try:
+        client = get_client()
+        me = client.get_me()
+        if not me.data:
+            return False, "get_me returned no user"
+        username = me.data.username
+    except Exception as e:
+        return False, f"Read check failed: {e}"
+
+    if not test_write:
+        return True, (
+            f"@{username} read OK (post permission not tested — "
+            f"run: python3 x_scheduler.py status --write-test)"
+        )
+
+    try:
+        client.create_tweet(text=".")
+    except Exception as e:
+        if _is_write_permission_error(e):
+            return False, f"@{username} cannot post. {WRITE_PERMISSION_HINT}"
+        return False, f"Write check failed: {e}"
+
+    return True, f"@{username} read+write OK"
+
+
 def post_tweet(text: str, dry_run: bool = False) -> str | None:
     if len(text) > 280:
         text = text[:277] + "..."
@@ -47,5 +87,8 @@ def post_tweet(text: str, dry_run: bool = False) -> str | None:
         log(f"POSTED | https://x.com/i/web/status/{tweet_id}")
         return tweet_id
     except Exception as e:
-        log(f"ERROR | {e}")
+        if _is_write_permission_error(e):
+            log(f"ERROR | 403 write forbidden — {WRITE_PERMISSION_HINT}")
+        else:
+            log(f"ERROR | {e}")
         return None

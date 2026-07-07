@@ -156,21 +156,13 @@ def _get_x_client():
     )
 
 
-def verify_api() -> bool:
-    if not credentials_ok():
-        print("❌ Missing X API keys in .env")
-        print("   Run: python3 x_scheduler.py init")
-        return False
-    try:
-        client = _get_x_client()
-        me = client.get_me()
-        if me.data:
-            print(f"✅ Connected as @{me.data.username} ({me.data.name})")
-            return True
-    except Exception as e:
-        print(f"❌ API verification failed: {e}")
-        print("   Check keys at https://developer.x.com and ensure Read+Write OAuth 1.0a")
-    return False
+def verify_api(test_write: bool = False) -> bool:
+    from x_api import verify_connection
+
+    ok, msg = verify_connection(test_write=test_write)
+    prefix = "✅" if ok else "❌"
+    print(f"{prefix} {msg}")
+    return ok
 
 
 def post_tweet(text: str, reply_to: str | None = None) -> str | None:
@@ -368,6 +360,7 @@ def main() -> None:
         choices=["init", "setup", "status", "calendar", "today", "week", "dry-run", "post", "uninstall"],
     )
     parser.add_argument("--force", type=int, default=None, help="Post calendar row by index")
+    parser.add_argument("--write-test", action="store_true", help="Also test create_tweet permission")
     args = parser.parse_args()
 
     if args.command == "init":
@@ -380,7 +373,7 @@ def main() -> None:
         return
 
     if args.command == "status":
-        sys.exit(0 if verify_api() else 1)
+        sys.exit(0 if verify_api(test_write=args.write_test) else 1)
 
     if args.command == "uninstall":
         cmd_uninstall()

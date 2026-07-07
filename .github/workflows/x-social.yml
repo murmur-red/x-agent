@@ -37,15 +37,18 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Verify X API
+      - name: Verify X API (read + write)
+        id: verify
+        continue-on-error: true
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
-        run: python3 x_scheduler.py status
+        run: python3 x_scheduler.py status --write-test
 
       - name: Run calendar + blog promo + trend watcher
+        if: steps.verify.outcome == 'success'
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
