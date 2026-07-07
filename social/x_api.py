@@ -85,18 +85,28 @@ def verify_connection(test_write: bool = False) -> tuple[bool, str]:
     return True, f"@{username} read+write OK"
 
 
-def post_tweet(text: str, dry_run: bool = False) -> str | None:
+def post_tweet(
+    text: str,
+    dry_run: bool = False,
+    *,
+    reply_to: str | None = None,
+) -> str | None:
     if len(text) > 280:
         text = text[:277] + "..."
 
     if dry_run or not credentials_ok():
-        log(f"DRY | {text}")
+        prefix = f"REPLY@{reply_to} | " if reply_to else ""
+        log(f"DRY | {prefix}{text}")
         return None
 
     try:
-        resp = get_client().create_tweet(text=text)
+        kwargs: dict = {"text": text}
+        if reply_to:
+            kwargs["in_reply_to_tweet_id"] = reply_to
+        resp = get_client().create_tweet(**kwargs)
         tweet_id = str(resp.data["id"])
-        log(f"POSTED | https://x.com/i/web/status/{tweet_id}")
+        label = "REPLIED" if reply_to else "POSTED"
+        log(f"{label} | https://x.com/i/web/status/{tweet_id}")
         return tweet_id
     except Exception as e:
         if _is_write_permission_error(e):

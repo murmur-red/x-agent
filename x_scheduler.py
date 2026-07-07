@@ -185,6 +185,20 @@ def post_tweet(text: str, reply_to: str | None = None) -> str | None:
         return None
 
 
+def _queue_self_reply(tweet_id: str, row: CalendarRow) -> None:
+    """Queue a short follow-up reply under our own post (optional)."""
+    if os.getenv("COMMENT_SELF_REPLY", "true").lower() not in ("1", "true", "yes"):
+        return
+    if row.thread_id and int(row.thread_part or 0) > 1:
+        return
+    try:
+        from x_commenter import enqueue_target
+
+        enqueue_target(tweet_id, source="own_post", note=row.row_id)
+    except Exception as exc:
+        log(f"COMMENT QUEUE | skip — {exc}")
+
+
 def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int:
     if not credentials_ok():
         log("SKIP | no API keys — run: python3 x_scheduler.py init")
@@ -228,6 +242,9 @@ def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int
                     key = f"{row.date}_{row.thread_id}_{row.thread_part}"
                     tweet_ids[key] = tweet_id
                     reply_to = tweet_id
+                else:
+                    tweet_ids[row.row_id] = tweet_id
+                _queue_self_reply(tweet_id, row)
                 count += 1
             elif not credentials_ok():
                 break

@@ -1,0 +1,13 @@
+{
+  "description": "Tweet IDs to reply to. Add manually or let calendar posts auto-queue self-replies.",
+  "targets": [
+    {
+      "tweet_id": "2074475828319031716",
+      "author": "",
+      "source": "manual",
+      "note": "",
+      "status": "pending",
+      "added": "2026-07-07"
+    }
+  ]
+}

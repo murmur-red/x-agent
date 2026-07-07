@@ -24,8 +24,8 @@
   ],
   "engage_daily": 5,
   "engage_tips": [
-    "Reply to 5 SaaS/CS posts per day with a data point, not a pitch",
-    "Quote-tweet horror stories with your portfolio telemetry angle",
-    "Join #SaaS #RevOps #CustomerSuccess conversations on Tue-Thu mornings"
+    "Queue replies: python3 social/x_commenter.py --add <tweet URL>",
+    "Automation posts up to 5 short replies/day from social/comment_pool.json",
+    "Own calendar posts auto-queue a follow-up reply (COMMENT_SELF_REPLY=true)"
   ]
 }

@@ -52,15 +52,19 @@ jobs:
           BLOG_PROMO_HOUR: "9"
           TREND_MAX_PER_WEEK: "6"
           BLOG_PROMO_FULL_URL: "true"
+          COMMENT_TZ: Europe/Amsterdam
+          COMMENT_HOUR: "10"
+          COMMENT_MAX_PER_DAY: "5"
         run: |
           python3 x_scheduler.py post
           python3 social/x_blog_promoter.py
           python3 social/x_trend_watcher.py
+          python3 social/x_commenter.py
 
       - name: Commit state
         run: |
           git config user.email "murmur.red1@gmail.com"
           git config user.name "murmur-red"
-          git add social/posted.json social/promoted.json social/trends_seen.json
+          git add social/posted.json social/promoted.json social/trends_seen.json social/comments_seen.json social/comment_targets.json
           git diff --staged --quiet || git commit -m "x: update posting state [skip ci]"
           git push
