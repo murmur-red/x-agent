@@ -24,8 +24,9 @@
   ],
   "engage_daily": 5,
   "engage_tips": [
-    "Grok scans this list daily for recent posts to reply to (max 5/day)",
-    "Grok also finds replies to @murmurRed and auto-responds (max 10/day)",
+    "Grok scans this list daily; posts @handle shout-outs (max 5/day)",
+    "Inbound replies to @murmurRed get thread replies (max 10/day)",
+    "X blocks cold thread replies to strangers — mentions use in-thread replies",
     "Manual override: python3 social/x_commenter.py --add <tweet URL>"
   ]
 }
