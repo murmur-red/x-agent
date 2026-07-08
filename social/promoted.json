@@ -1,4 +1,14 @@
 {
-  "promoted_ids": [],
-  "history": []
+  "promoted_ids": [
+    "fae5a8ba-cf8e-4526-9385-4ba040fe6e94"
+  ],
+  "history": [
+    {
+      "id": "fae5a8ba-cf8e-4526-9385-4ba040fe6e94",
+      "title": "People Are Betting Money on How Often Elon Musk Tweets",
+      "url": "https://murmur-red.github.io/blog/tech/2026/07/08/people-are-betting-money-on-how-often-elon-musk-tw.html",
+      "at": "2026-07-08T09:22:48.484232+00:00",
+      "tweet_id": "2074786266953269736"
+    }
+  ]
 }

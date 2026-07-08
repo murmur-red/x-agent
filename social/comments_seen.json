@@ -1,4 +1,56 @@
 {
-  "commented_tweet_ids": [],
-  "history": []
+  "commented_tweet_ids": [
+    "2074444816520519832",
+    "2074300298840174810",
+    "2074326072385245663",
+    "2074168746093031866",
+    "2074165268532662545"
+  ],
+  "history": [
+    {
+      "date": "2026-07-08",
+      "target_tweet_id": "2074165268532662545",
+      "target_author": "alexiskold",
+      "source": "contributor",
+      "reply_text": "\ud83d\udcca",
+      "engage_mode": "mention_tweet",
+      "reply_tweet_id": "2074786276365230388"
+    },
+    {
+      "date": "2026-07-08",
+      "target_tweet_id": "2074168746093031866",
+      "target_author": "shl",
+      "source": "contributor",
+      "reply_text": "this",
+      "engage_mode": "mention_tweet",
+      "reply_tweet_id": "2074786274674901250"
+    },
+    {
+      "date": "2026-07-08",
+      "target_tweet_id": "2074326072385245663",
+      "target_author": "patio11",
+      "source": "contributor",
+      "reply_text": "\ud83d\udcaf",
+      "engage_mode": "mention_tweet",
+      "reply_tweet_id": "2074786273924173910"
+    },
+    {
+      "date": "2026-07-08",
+      "target_tweet_id": "2074300298840174810",
+      "target_author": "lennysan",
+      "source": "contributor",
+      "reply_text": "\ud83d\udcaf",
+      "engage_mode": "mention_tweet",
+      "reply_tweet_id": "2074786273118818780"
+    },
+    {
+      "date": "2026-07-08",
+      "target_tweet_id": "2074444816520519832",
+      "target_author": "jasonlk",
+      "source": "contributor",
+      "reply_text": "agreed",
+      "engage_mode": "mention_tweet",
+      "reply_tweet_id": "2074786272267411890"
+    }
+  ]
 }
