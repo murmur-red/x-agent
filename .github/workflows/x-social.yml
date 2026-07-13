@@ -6,6 +6,9 @@
 #   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET
 # Optional (smarter teasers + Grok trend scan):
 #   ANTHROPIC_API_KEY, XAI_API_KEY
+# Credit alerts (GitHub Issue → emails murmur.red1@gmail.com):
+#   X_CREDIT_BALANCE_USD — set to console.x.com balance after each top-up
+#   X_CREDIT_WARN_USD (default 5), X_CREDIT_CRITICAL_USD (default 2)
 #
 # State files (posted.json, promoted.json, trends_seen.json) are committed
 # back to this repo after each run so nothing double-posts.
@@ -20,6 +23,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: x-social
@@ -57,16 +61,21 @@ jobs:
           COMMENT_MAX_PER_DAY: "5"
           MENTION_REPLY_MAX_PER_DAY: "10"
           COMMENT_SELF_REPLY: "false"
+          X_CREDIT_BALANCE_USD: ${{ secrets.X_CREDIT_BALANCE_USD }}
+          X_CREDIT_WARN_USD: "5"
+          X_CREDIT_CRITICAL_USD: "2"
+          CREDIT_DAILY_PROBE: "false"
         run: |
           python3 x_scheduler.py post
           python3 social/x_blog_promoter.py
           python3 social/x_trend_watcher.py
           python3 social/x_commenter.py
+          python3 social/x_credit_watch.py check
 
       - name: Commit state
         run: |
           git config user.email "murmur.red1@gmail.com"
           git config user.name "murmur-red"
-          git add social/posted.json social/promoted.json social/trends_seen.json social/comments_seen.json social/comment_targets.json
+          git add social/posted.json social/promoted.json social/trends_seen.json social/comments_seen.json social/comment_targets.json social/credits_state.json
           git diff --staged --quiet || git commit -m "x: update posting state [skip ci]"
           git push

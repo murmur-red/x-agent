@@ -1,0 +1,58 @@
+{
+  "balance_usd": 17.24,
+  "balance_set_at": "2026-07-13T12:59:46.128246+00:00",
+  "spent_usd": 0.0,
+  "log_offset": 7213,
+  "last_check_at": "2026-07-13T12:59:46.195657+00:00",
+  "last_probe_at": null,
+  "last_probe_ok": true,
+  "last_alert_level": null,
+  "open_alert_issue": null,
+  "events": [
+    {
+      "at": "2026-07-13T12:59:20.497449+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497647+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497698+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497701+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497704+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497706+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497709+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    },
+    {
+      "at": "2026-07-13T12:59:20.497711+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-13T12:43:57.834938+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-13T12:59:20.497714+00:00",
+      "kind": "post_url",
+      "cost_usd": 0.2
+    }
+  ]
+}
