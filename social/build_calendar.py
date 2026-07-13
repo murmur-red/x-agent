@@ -18,6 +18,7 @@ from x_content import (
     HUMOR_POSTS,
     POLLS,
     THREADS,
+    WEEK1_LAUNCH,
     format_post,
 )
 
@@ -63,7 +64,7 @@ def _schedule(start: date) -> list[dict]:
 
     # --- Weeks 1–4: anchor content ---
     w = 1
-    add(0, "launch", HOT_TAKES[0], w, "Go live — 13:00 Amsterdam")
+    add(0, "launch", WEEK1_LAUNCH, w, "Voice relaunch — 13:00 Amsterdam")
     lay_thread(0, "noon", "ai_usage_gap", w)
     add(1, "morning", AI_TECH_POSTS[0], w, "AI + tech")
     add(1, "evening", HUMOR_POSTS[0], w, "humor")

@@ -474,6 +474,32 @@ AI_TECH_POSTS: list[Post] = [
         "Same energy: everyone wants capacity, nobody wants maintenance.",
         "single",
     ),
+    Post(
+        "AI coding assistant wrote 400 lines.\n"
+        "Senior dev deleted 380 and said 'thanks for the draft.'\n"
+        "Everyone called it a win.",
+        "single",
+    ),
+    Post(
+        "Edge AI pitch: intelligence everywhere.\n"
+        "Edge AI reality: firmware update at 4am and a prayer.",
+        "single",
+    ),
+    Post(
+        "Multimodal models can see, hear, and read.\n"
+        "Still can't find the one person who owns the prod API key.",
+        "single",
+    ),
+    Post(
+        "RAG tutorial: connect your docs, get answers.\n"
+        "RAG prod: half the docs are from 2017 and nobody tagged the owner.",
+        "single",
+    ),
+    Post(
+        "Fine-tuning headline: bespoke intelligence.\n"
+        "Fine-tuning invoice: GPUs rented, accuracy up 2%, sleep down 40%.",
+        "single",
+    ),
 ]
 
 GLOBAL_AI_POSTS: list[Post] = [
@@ -529,6 +555,31 @@ GLOBAL_AI_POSTS: list[Post] = [
         "Operations in the rest of the world ships Tuesday.",
         "single",
     ),
+    Post(
+        "South Korea: world-class chips, world-class delivery apps,\n"
+        "and enterprise AI pilots that outlive three reorgs.",
+        "single",
+    ),
+    Post(
+        "France debates AI and culture with real passion.\n"
+        "Meanwhile the workflow runs in a tool IT didn't approve.",
+        "single",
+    ),
+    Post(
+        "Canada: serious AI research, polite procurement,\n"
+        "and a pilot that becomes 'legacy' before it becomes 'production'.",
+        "single",
+    ),
+    Post(
+        "Australia's ag tech scene is quietly sharp.\n"
+        "Less keynote. More 'this drought cost us less than last year.'",
+        "single",
+    ),
+    Post(
+        "Israel ships fast AI products.\n"
+        "A lot of EU enterprises buy them, then spend a year on access reviews.",
+        "single",
+    ),
 ]
 
 AGRI_AI_POSTS: list[Post] = [
@@ -582,6 +633,31 @@ AGRI_AI_POSTS: list[Post] = [
     Post(
         "We talk AI for farms in rich countries.\n"
         "Worth asking: who maintains the model when the agronomist retires?",
+        "single",
+    ),
+    Post(
+        "Autonomous tractor demo: flawless loop.\n"
+        "Real field: one fence post from 1998 that isn't in any dataset.",
+        "single",
+    ),
+    Post(
+        "Crop disease AI flagged a patch.\n"
+        "Farmer walked it. Chickens. Not blight. Model doesn't know chickens.",
+        "single",
+    ),
+    Post(
+        "Developed-world ag grants love 'AI for sustainable farming.'\n"
+        "The sustainable part is often the farmer still showing up at 5am.",
+        "single",
+    ),
+    Post(
+        "Soil sensor network: 47 nodes online.\n"
+        "Node 48 is under a truck. Dashboard averages it out. Farmer notices.",
+        "single",
+    ),
+    Post(
+        "AI pest detection app: send a photo, get a label.\n"
+        "Farmer: 'that's not a pest, that's Steve's goat again.'",
         "single",
     ),
 ]
@@ -647,7 +723,42 @@ HUMOR_POSTS: list[Post] = [
         "Explaining why nobody uses it is a full-time career.",
         "single",
     ),
+    Post(
+        "CEO: 'we're AI-first now.'\n"
+        "Engineer: 'cool, who rotates the API keys?'\n"
+        "CEO: '...let's schedule a workshop.'",
+        "single",
+    ),
+    Post(
+        "Developed countries: export AI regulation PDFs.\n"
+        "Also export spreadsheets nobody's allowed to put in the model.",
+        "single",
+    ),
+    Post(
+        "Ag tech conference: 'data-driven decisions.'\n"
+        "Parking lot conversation: 'did your pivot actually work though?'",
+        "single",
+    ),
+    Post(
+        "New model release day is like Black Friday for people\n"
+        "who will benchmark it and still use the old one in prod.",
+        "single",
+    ),
+    Post(
+        "AI governance committee met for two hours.\n"
+        "Outcome: another committee.\n"
+        "The Slack bot kept working the whole time.",
+        "single",
+    ),
 ]
+
+# Fresh opener when relaunching voice — not the original launch tweet
+WEEK1_LAUNCH = Post(
+    "More AI in the wild from here.\n\n"
+    "Offices, farms, developed-world adoption, and the dashboards that lie.\n\n"
+    "Less strategy deck. More Tuesday morning.",
+    "single",
+)
 
 BEHIND_THE_SCENES: list[Post] = [
     Post(
