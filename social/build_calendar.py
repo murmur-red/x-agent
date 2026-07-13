@@ -7,12 +7,16 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from x_content import (
+    AGRI_AI_POSTS,
+    AI_TECH_POSTS,
     BEHIND_THE_SCENES,
     DATA_DROPS,
     ENGAGEMENT_HOOKS,
+    FILLER_ROTATION,
+    GLOBAL_AI_POSTS,
     HOT_TAKES,
+    HUMOR_POSTS,
     POLLS,
-    QUICK_TAKES,
     THREADS,
     format_post,
 )
@@ -57,92 +61,98 @@ def _schedule(start: date) -> list[dict]:
         for part in THREADS[thread_key]:
             add(day_offset, slot, part, week)
 
-    # --- Weeks 1–4: anchor content (threads, polls, launches) ---
+    # --- Weeks 1–4: anchor content ---
     w = 1
     add(0, "launch", HOT_TAKES[0], w, "Go live — 13:00 Amsterdam")
     lay_thread(0, "noon", "ai_usage_gap", w)
-    add(1, "morning", DATA_DROPS[0], w, "Telemetry screenshot")
-    add(2, "morning", HOT_TAKES[1], w)
-    add(2, "evening", ENGAGEMENT_HOOKS[0], w)
-    add(3, "morning", BEHIND_THE_SCENES[0], w)
-    add(4, "noon", HOT_TAKES[2], w)
-    add(5, "morning", DATA_DROPS[1], w)
+    add(1, "morning", AI_TECH_POSTS[0], w, "AI + tech")
+    add(1, "evening", HUMOR_POSTS[0], w, "humor")
+    add(2, "morning", GLOBAL_AI_POSTS[0], w, "developed countries")
+    add(2, "evening", ENGAGEMENT_HOOKS[1], w)
+    add(3, "morning", AGRI_AI_POSTS[0], w, "agriculture AI")
+    add(3, "noon", HOT_TAKES[1], w)
+    add(4, "morning", AI_TECH_POSTS[2], w)
+    add(4, "evening", HUMOR_POSTS[2], w)
+    add(5, "morning", GLOBAL_AI_POSTS[2], w)
+    add(5, "noon", HOT_TAKES[2], w)
+    add(6, "morning", AGRI_AI_POSTS[2], w)
     add(6, "evening", POLLS[0], w)
 
     w = 2
-    add(7, "morning", HOT_TAKES[3], w)
+    add(7, "morning", GLOBAL_AI_POSTS[4], w)
+    add(7, "evening", HUMOR_POSTS[4], w)
     for p in THREADS["ai_ops_playbook"]:
         add(8, "morning" if p.thread_part <= 2 else "noon", p, w)
-    add(9, "morning", DATA_DROPS[2], w)
-    add(10, "evening", HOT_TAKES[4], w)
-    add(11, "morning", BEHIND_THE_SCENES[1], w)
-    add(12, "noon", ENGAGEMENT_HOOKS[1], w)
-    add(13, "morning", POLLS[1], w)
+    add(9, "morning", AI_TECH_POSTS[4], w)
+    add(10, "evening", HOT_TAKES[3], w)
+    add(11, "morning", AGRI_AI_POSTS[4], w)
+    add(12, "noon", ENGAGEMENT_HOOKS[0], w)
+    add(13, "morning", DATA_DROPS[0], w, "telemetry — week 2")
+    add(13, "evening", POLLS[1], w)
 
     w = 3
     for p in THREADS["company_story_bbb"]:
         add(14 + (p.thread_part - 1) // 2, "morning" if p.thread_part % 2 == 1 else "noon", p, w)
-    add(16, "evening", HOT_TAKES[0], w, "Repost — new audience")
-    add(17, "morning", DATA_DROPS[0], w)
-    add(18, "noon", ENGAGEMENT_HOOKS[2], w)
-    add(19, "morning", BEHIND_THE_SCENES[2], w)
+    add(16, "evening", AGRI_AI_POSTS[6], w, "ag tech story")
+    add(17, "morning", GLOBAL_AI_POSTS[6], w)
+    add(18, "noon", HUMOR_POSTS[6], w)
+    add(19, "morning", AI_TECH_POSTS[6], w)
     add(20, "evening", POLLS[2], w)
 
     w = 4
-    add(21, "morning", HOT_TAKES[1], w, "Evergreen repost")
-    add(22, "morning", DATA_DROPS[1], w)
-    add(23, "noon", ENGAGEMENT_HOOKS[0], w)
-    add(24, "morning", BEHIND_THE_SCENES[0], w)
-    add(25, "evening", POLLS[0], w)
-    add(26, "morning", HOT_TAKES[4], w)
-    add(27, "noon", ENGAGEMENT_HOOKS[2], w)
+    add(21, "morning", HOT_TAKES[4], w)
+    add(22, "morning", AGRI_AI_POSTS[8], w)
+    add(23, "noon", GLOBAL_AI_POSTS[8], w)
+    add(24, "morning", ENGAGEMENT_HOOKS[2], w)
+    add(25, "evening", HUMOR_POSTS[8], w)
+    add(26, "morning", BEHIND_THE_SCENES[0], w)
+    add(27, "noon", AI_TECH_POSTS[8], w)
 
     # --- Weeks 5–8: repeat threads + fresh singles ---
     w = 5
     lay_thread(28, "noon", "ai_usage_gap", w)
-    add(29, "morning", HOT_TAKES[2], w)
-    add(30, "evening", ENGAGEMENT_HOOKS[1], w)
-    add(31, "morning", DATA_DROPS[2], w)
-    add(32, "noon", BEHIND_THE_SCENES[1], w)
-    add(33, "evening", POLLS[1], w)
+    add(29, "morning", GLOBAL_AI_POSTS[1], w)
+    add(30, "evening", AGRI_AI_POSTS[1], w)
+    add(31, "morning", HUMOR_POSTS[1], w)
+    add(32, "noon", AI_TECH_POSTS[1], w)
+    add(33, "evening", POLLS[0], w)
 
     w = 6
     for p in THREADS["ai_ops_playbook"]:
         add(35, "morning" if p.thread_part <= 2 else "noon", p, w)
-    add(36, "morning", HOT_TAKES[3], w)
-    add(37, "evening", DATA_DROPS[0], w)
-    add(38, "morning", ENGAGEMENT_HOOKS[2], w)
-    add(39, "noon", BEHIND_THE_SCENES[2], w)
+    add(36, "morning", AGRI_AI_POSTS[3], w)
+    add(37, "evening", GLOBAL_AI_POSTS[3], w)
+    add(38, "morning", HUMOR_POSTS[3], w)
+    add(39, "noon", DATA_DROPS[1], w)
     add(40, "evening", POLLS[2], w)
 
     w = 7
     for p in THREADS["company_story_bbb"]:
         add(42 + (p.thread_part - 1) // 2, "morning" if p.thread_part % 2 == 1 else "noon", p, w)
-    add(44, "evening", HOT_TAKES[1], w)
-    add(45, "morning", DATA_DROPS[1], w)
-    add(46, "noon", ENGAGEMENT_HOOKS[0], w)
-    add(47, "morning", BEHIND_THE_SCENES[0], w)
+    add(44, "evening", AI_TECH_POSTS[5], w)
+    add(45, "morning", GLOBAL_AI_POSTS[5], w)
+    add(46, "noon", AGRI_AI_POSTS[5], w)
+    add(47, "morning", ENGAGEMENT_HOOKS[1], w)
 
     w = 8
     add(49, "morning", HOT_TAKES[0], w, "Month-2 evergreen")
-    add(50, "evening", POLLS[0], w)
-    add(51, "morning", DATA_DROPS[2], w)
-    add(52, "noon", HOT_TAKES[4], w)
-    add(53, "evening", ENGAGEMENT_HOOKS[1], w)
+    add(50, "evening", HUMOR_POSTS[10], w)
+    add(51, "morning", AI_TECH_POSTS[9], w)
+    add(52, "noon", AGRI_AI_POSTS[9], w)
+    add(53, "evening", GLOBAL_AI_POSTS[9], w)
     add(54, "morning", BEHIND_THE_SCENES[1], w)
-    add(55, "evening", POLLS[2], w)
+    add(55, "evening", POLLS[1], w)
 
-    # --- Daily fill: 09:00 quick take + extra evening/noon on open slots ---
-    fillers = QUICK_TAKES + HOT_TAKES + DATA_DROPS
+    # --- Daily fill: broader AI/tech + humor rotation ---
     for day in range(NUM_WEEKS * 7):
         week = day // 7 + 1
         if day == 0:
-            continue  # launch day: 11:00 Amsterdam only (no early filler)
-        add(day, "early", fillers[day % len(fillers)], week)
+            continue  # launch day only
+        filler = FILLER_ROTATION[day % len(FILLER_ROTATION)]
+        add(day, "early", filler, week)
+        add(day, "noon", FILLER_ROTATION[(day + 11) % len(FILLER_ROTATION)], week)
         if day % 2 == 0:
-            add(day, "noon", fillers[(day + 5) % len(fillers)], week)
-        if day % 3 == 1:
-            add(day, "evening", ENGAGEMENT_HOOKS[day % len(ENGAGEMENT_HOOKS)], week)
+            add(day, "evening", HUMOR_POSTS[day % len(HUMOR_POSTS)], week)
 
     rows.sort(key=lambda r: (r["date"], r["time_utc"], int(r["thread_part"] or 0)))
     return rows

@@ -33,15 +33,16 @@ SEEN_PATH = Path(__file__).parent / "trends_seen.json"
 MAX_PER_WEEK = int(os.getenv("TREND_MAX_PER_WEEK", "6"))
 
 REACTIVE_SYSTEM = """\
-You write a short reactive X post for @murmurRed when something big happens in AI.
+You write a short reactive X post for @murmurRed when something big happens in AI or tech.
 
-Voice: operator watching how companies use AI. Sharp, grounded, not hype.
-Angle: what this means for teams actually running AI — adoption, cost, ops, risk.
+Voice: human operator — wry, grounded, occasionally funny. Not a press release.
+Angles: enterprise usage, developed-world adoption, ag tech, or general tech reality.
 Rules:
 - Under 250 characters total
 - Reference the specific event by name
-- One clear take, not a news summary
-- No hashtags, no em dashes, no "breaking"
+- One clear take with personality — not a news summary
+- Dry humor okay. No hashtags, no em dashes, no "breaking", no "excited to announce"
+- No URLs
 - Return ONLY the post text
 """
 

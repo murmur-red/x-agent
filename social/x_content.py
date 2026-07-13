@@ -1,9 +1,8 @@
 """
-murmur.red X content library — AI ops energy, minimal CS jargon.
+murmur.red X content library — human operator voice across AI, tech, and the real world.
 
-Voice: operator watching how companies buy AI vs actually run it.
-Topics: AI adoption, usage telemetry, token economics, ops reality.
-Companies: what they deploy, what sticks, what quietly dies.
+Topics: enterprise AI ops, general tech, developed-world adoption, agriculture AI,
+with dry humor and plain language. No corporate speak, no link spam.
 """
 
 from __future__ import annotations
@@ -14,15 +13,23 @@ from typing import Iterator
 BRAND = {
     "handle": "@murmur_red",
     "url": "https://murmur.red",
-    "tagline": "AI ops telemetry",
+    "tagline": "AI in the wild — offices, farms, and dashboards that lie",
     "bio": (
-        "How companies buy AI vs how they actually use it. "
-        "Usage, cost, adoption — in numbers. 🔥 murmur.red"
+        "AI ops, tech, and the gap between the slide deck and Tuesday morning. "
+        "Enterprise usage, global adoption, ag tech. Occasionally funny."
     ),
     "pinned_thread_hook": (
         "Every company bought the AI license. Half are barely running inference. "
         "A thread on the usage gap 🧵"
     ),
+    "voice_rules": [
+        "Sound like a person, not a press release.",
+        "One idea per post. Short lines. Okay to be wry or self-deprecating.",
+        "Dry humor > hype. Observation > pitch. No 'excited to announce'.",
+        "Mix: enterprise usage, AI/tech news angles, developed countries, agriculture.",
+        "No URLs in calendar posts (avoids link preview cards).",
+        "Specific beats vague: 'week 9' beats 'digital transformation'.",
+    ],
 }
 
 # Demo portfolio — reframed as AI adoption patterns, not CS accounts
@@ -187,11 +194,11 @@ THREADS: dict[str, list[Post]] = {
             thread_part=5,
         ),
         Post(
-            "5/ The fix isn't another pilot.\n\n"
-            "It's usage telemetry + identity checks + an AI loop "
-            "that commits to a read with numbers — not vibes.\n\n"
-            "We built it at murmur.red\n\n"
-            "RT if your AI dashboard looks healthier than your inference graph.",
+            "5/ The fix isn't another pilot deck.\n\n"
+            "It's someone watching inference like they'd watch cash flow.\n"
+            "Boring job. High leverage.\n\n"
+            "If your dashboard looks healthier than your usage graph, "
+            "you're measuring procurement — not adoption.",
             "thread",
             thread_id="ai_usage_gap",
             thread_part=6,
@@ -242,10 +249,10 @@ THREADS: dict[str, list[Post]] = {
             thread_part=5,
         ),
         Post(
-            "5/ We run a generator-critic loop on usage data:\n\n"
-            "Generate read → critic attacks → revise with evidence.\n\n"
-            "No vague 'low engagement.' Only numbers.\n\n"
-            "Live simulator: murmur.red",
+            "5/ Ops habit that actually helps:\n\n"
+            "One graph. Licensed spend vs real usage.\n"
+            "One owner. One weekly check.\n"
+            "One honest sentence for leadership — even if it's awkward.",
             "thread",
             thread_id="ai_ops_playbook",
             thread_part=6,
@@ -292,8 +299,8 @@ THREADS: dict[str, list[Post]] = {
         Post(
             "The lesson:\n\n"
             "Buying AI ≠ operating AI.\n"
-            "Watch inference. Watch ownership. Watch identity.\n\n"
-            "murmur.red — usage telemetry for companies that ship AI.",
+            "The contract renews. The workflow quietly leaves.\n"
+            "Someone should be watching that. Often nobody is.",
             "thread",
             thread_id="company_bbb",
             thread_part=5,
@@ -336,14 +343,14 @@ ENGAGEMENT_HOOKS: list[Post] = [
         "single",
     ),
     Post(
-        "Ops people — what do you wish leadership actually measured on AI?\n\n"
-        "(Mine: inference trend. Not slide count.)",
+        "Honest question — no vendor pitch:\n\n"
+        "Where have you actually seen AI work outside a demo?\n"
+        "Office, farm, hospital, warehouse — curious what's real.",
         "single",
     ),
     Post(
-        "Building in public: usage telemetry for AI-powered companies.\n\n"
-        "Demo portfolio: $2.5M licensed, $390K idle gap.\n\n"
-        "What should we instrument next? 👇",
+        "Wrong answers only:\n\n"
+        "Best signal that your AI rollout succeeded?",
         "single",
     ),
 ]
@@ -412,6 +419,236 @@ QUICK_TAKES: list[Post] = [
     ),
 ]
 
+AI_TECH_POSTS: list[Post] = [
+    Post(
+        "LLM didn't hallucinate.\n"
+        "It confidently described a department that dissolved in 2019.\n\n"
+        "We've all been there.",
+        "single",
+    ),
+    Post(
+        "2026 tech stack:\n"
+        "Postgres, Kubernetes, three copilots opened once in March,\n"
+        "and one person who still knows where the cron jobs live.",
+        "single",
+    ),
+    Post(
+        "Every AI keynote: 'this changes everything.'\n"
+        "Every ops channel six months later: 'who owns the API key?'",
+        "single",
+    ),
+    Post(
+        "GPU shortage solved the wrong problem.\n"
+        "We still can't explain what half the models are doing on Tuesdays.",
+        "single",
+    ),
+    Post(
+        "Open-source model drops are like free puppies.\n"
+        "Adorable announcement. Someone still feeds it GPUs at 2am.",
+        "single",
+    ),
+    Post(
+        "Tech Twitter when a new benchmark drops:\n"
+        "📈 numbers go up\n"
+        "🧍 production workflows unchanged",
+        "single",
+    ),
+    Post(
+        "The most underrated AI feature is still 'Ctrl+Z'\n"
+        "because the model already emailed three clients.",
+        "single",
+    ),
+    Post(
+        "Robots in warehouses: impressive.\n"
+        "Robots in slide decks: undefeated.",
+        "single",
+    ),
+    Post(
+        "AI safety discourse is important.\n"
+        "So is the mundane safety of not piping prod data into a chat box.",
+        "single",
+    ),
+    Post(
+        "Semiconductor news today.\n"
+        "My plants tomorrow.\n"
+        "Same energy: everyone wants capacity, nobody wants maintenance.",
+        "single",
+    ),
+]
+
+GLOBAL_AI_POSTS: list[Post] = [
+    Post(
+        "US enterprise AI playbook:\n"
+        "$2M contract → 12-person pilot → reorg → "
+        "dashboard green, usage somewhere else.",
+        "single",
+    ),
+    Post(
+        "Nordic AI governance: thoughtful whitepaper, calm committee,\n"
+        "then someone runs the real workflow in a spreadsheet anyway.",
+        "single",
+    ),
+    Post(
+        "UK public sector AI:\n"
+        "beautiful principles document,\n"
+        "procurement cycle longer than the model's entire lifespan.",
+        "single",
+    ),
+    Post(
+        "Germany: engineering-grade caution on AI.\n"
+        "Also engineering-grade Excel exports nobody audits.",
+        "single",
+    ),
+    Post(
+        "Japan's factory AI adoption is underrated.\n"
+        "Less keynote. More 'this line stops costing us money.'",
+        "single",
+    ),
+    Post(
+        "Netherlands: 11 apps to book a dentist,\n"
+        "one AI that summarizes why you still didn't go.",
+        "single",
+    ),
+    Post(
+        "Singapore treats AI like infrastructure.\n"
+        "A lot of places treat it like confetti for the annual report.",
+        "single",
+    ),
+    Post(
+        "Developed countries don't lack AI tools.\n"
+        "They lack boring owners for boring workflows after go-live.",
+        "single",
+    ),
+    Post(
+        "EU AI Act conversations: serious, necessary, slow.\n"
+        "Meanwhile teams still share API keys in a Slack thread named 'temp'.",
+        "single",
+    ),
+    Post(
+        "Silicon Valley ships the demo.\n"
+        "Operations in the rest of the world ships Tuesday.",
+        "single",
+    ),
+]
+
+AGRI_AI_POSTS: list[Post] = [
+    Post(
+        "Precision ag pitch: every plant individually monitored.\n"
+        "Field reality: one sensor offline, dashboard says 🟢, "
+        "farmer trusts the neighbor's rain feeling.",
+        "single",
+    ),
+    Post(
+        "AI drone maps the field.\n"
+        "Model flags blight.\n"
+        "Farmer checks the corner that always lies to the algorithm.",
+        "single",
+    ),
+    Post(
+        "Developed countries fund ag AI with grants and pilots.\n"
+        "Farmers fund intuition until the intuition is wrong — then both learn.",
+        "single",
+    ),
+    Post(
+        "Satellite + ML crop forecast: elegant.\n"
+        "Actual decision: weather app, gut, and whether the tractor sounds right.",
+        "single",
+    ),
+    Post(
+        "Smart irrigation sold the dream of perfect water math.\n"
+        "Reality: a clogged line and a very human Saturday.",
+        "single",
+    ),
+    Post(
+        "AI in agriculture isn't magic.\n"
+        "It's logistics, weather, margins, and machinery older than the model card.",
+        "single",
+    ),
+    Post(
+        "Big ag tech demos in climate-controlled rooms.\n"
+        "Small farms debug in mud with gloves on. Different test environment.",
+        "single",
+    ),
+    Post(
+        "Yield prediction models love clean data.\n"
+        "Soil loves surprises. Marriage of inconvenience.",
+        "single",
+    ),
+    Post(
+        "The best ag AI I've seen didn't wow a conference.\n"
+        "It stopped one expensive mistake before harvest week.",
+        "single",
+    ),
+    Post(
+        "We talk AI for farms in rich countries.\n"
+        "Worth asking: who maintains the model when the agronomist retires?",
+        "single",
+    ),
+]
+
+HUMOR_POSTS: list[Post] = [
+    Post(
+        "AI strategy deck: transformative.\n"
+        "Usage graph: opened twice, blamed intern, renewed anyway.",
+        "single",
+    ),
+    Post(
+        "My favorite enterprise metric is 'active seats'\n"
+        "because it measures procurement, not humans.",
+        "single",
+    ),
+    Post(
+        "ChatGPT for emails: great.\n"
+        "ChatGPT for legal, finance, and HR without review: see you in discovery.",
+        "single",
+    ),
+    Post(
+        "We don't need AGI to cause incidents.\n"
+        "Regular CI with auto-deploy already does fine.",
+        "single",
+    ),
+    Post(
+        "Pilot team mood: 🚀\n"
+        "Week 9 ops mood: 🫠\n"
+        "Finance mood: ✅ renewed",
+        "single",
+    ),
+    Post(
+        "Machine learning team: 'it's learning.'\n"
+        "Finance: 'from what budget line?'",
+        "single",
+    ),
+    Post(
+        "Hot take: your AI vendor's NPS survey is fine.\n"
+        "Your inference graph is the breakup text.",
+        "single",
+    ),
+    Post(
+        "If the AI rollout succeeded, you wouldn't need six synonyms for 'adoption' in the QBR.",
+        "single",
+    ),
+    Post(
+        "Ag tech AI and enterprise AI share a problem:\n"
+        "beautiful dashboard, suspiciously quiet API.",
+        "single",
+    ),
+    Post(
+        "I asked leadership for an AI usage graph.\n"
+        "They sent a strategy PDF. Different genre.",
+        "single",
+    ),
+    Post(
+        "Tech prediction for this year:\n"
+        "more models, same number of people who enjoy reading logs.",
+        "single",
+    ),
+    Post(
+        "Building AI is hard.\n"
+        "Explaining why nobody uses it is a full-time career.",
+        "single",
+    ),
+]
+
 BEHIND_THE_SCENES: list[Post] = [
     Post(
         "Shipped: generator-critic loop on usage data.\n\n"
@@ -427,29 +664,48 @@ BEHIND_THE_SCENES: list[Post] = [
         "single",
     ),
     Post(
-        "New page: economics of running AI inside a company.\n\n"
+        "Shipping a page on the economics of running AI inside a company.\n\n"
         "Headcount vs revenue vs inference cost.\n"
-        "What you can actually afford to operate.\n"
-        "Break-even with fading adoption baked in.\n\n"
-        "murmur.red",
+        "Spoiler: the spreadsheet is the real product.",
         "single",
     ),
 ]
 
 WEEKLY_THEMES = {
-    1: "Launch — AI usage gap thread + hot takes",
-    2: "AI ops — how companies should run inference",
-    3: "Company stories — fading adoption patterns",
-    4: "Community — polls, building in public",
-    5: "Deep dive — usage gap (repeat for new followers)",
-    6: "Ops playbook + quick takes",
-    7: "Company patterns + engagement",
-    8: "Evergreen hits + polls",
+    1: "Launch + usage gap — human operator voice",
+    2: "Developed-world AI + enterprise ops",
+    3: "Agriculture AI + company stories",
+    4: "Tech humor + community polls",
+    5: "Global adoption + usage gap (repeat)",
+    6: "Ag tech + ops playbook",
+    7: "AI/tech takes + engagement",
+    8: "Evergreen hits + humor",
 }
+
+# Rotating filler pools — weighted toward broader AI/tech + humor
+FILLER_ROTATION: list[Post] = (
+    AI_TECH_POSTS
+    + GLOBAL_AI_POSTS
+    + AGRI_AI_POSTS
+    + HUMOR_POSTS
+    + QUICK_TAKES
+    + HOT_TAKES
+)
 
 
 def all_posts() -> Iterator[Post]:
-    for p in HOT_TAKES + DATA_DROPS + POLLS + ENGAGEMENT_HOOKS + BEHIND_THE_SCENES:
+    for p in (
+        HOT_TAKES
+        + AI_TECH_POSTS
+        + GLOBAL_AI_POSTS
+        + AGRI_AI_POSTS
+        + HUMOR_POSTS
+        + DATA_DROPS
+        + POLLS
+        + ENGAGEMENT_HOOKS
+        + BEHIND_THE_SCENES
+        + QUICK_TAKES
+    ):
         yield p
     for thread in THREADS.values():
         for p in thread:
