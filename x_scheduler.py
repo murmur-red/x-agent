@@ -235,9 +235,9 @@ def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int
                     break
 
             tweet_id = post_tweet(row.post_text, reply_to=reply_to)
-            posted_ids.add(row.row_id)
 
             if tweet_id:
+                posted_ids.add(row.row_id)
                 if row.thread_id:
                     key = f"{row.date}_{row.thread_id}_{row.thread_part}"
                     tweet_ids[key] = tweet_id
