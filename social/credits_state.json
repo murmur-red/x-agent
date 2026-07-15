@@ -2,8 +2,8 @@
   "balance_usd": 7.24,
   "balance_set_at": "2026-07-13T15:43:29.089793+00:00",
   "spent_usd": 0.4,
-  "log_offset": 1647,
-  "last_check_at": "2026-07-15T21:53:11.400536+00:00",
+  "log_offset": 1287,
+  "last_check_at": "2026-07-15T22:53:30.199788+00:00",
   "last_probe_at": null,
   "last_probe_ok": true,
   "last_alert_level": null,
@@ -148,6 +148,41 @@
       "at": "2026-07-15T19:01:44.211010+00:00",
       "kind": "exhausted",
       "line": "2026-07-15T19:01:43.787848+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199745+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:16.638468+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199758+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:18.724890+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199763+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:20.796310+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199766+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:22.876770+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199769+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:24.949023+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199772+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:27.014677+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T22:53:30.199777+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T22:53:30.007322+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
     }
   ]
 }
