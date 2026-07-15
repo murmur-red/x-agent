@@ -2,8 +2,8 @@
   "balance_usd": 7.24,
   "balance_set_at": "2026-07-13T15:43:29.089793+00:00",
   "spent_usd": 0.4,
-  "log_offset": 1761,
-  "last_check_at": "2026-07-15T17:45:02.260167+00:00",
+  "log_offset": 1496,
+  "last_check_at": "2026-07-15T19:01:44.211023+00:00",
   "last_probe_at": null,
   "last_probe_ok": true,
   "last_alert_level": null,
@@ -113,6 +113,41 @@
       "at": "2026-07-15T14:44:00.059121+00:00",
       "kind": "exhausted",
       "line": "2026-07-15T14:43:58.200346+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
+    },
+    {
+      "at": "2026-07-15T19:01:44.210976+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:26.539516+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T19:01:44.210992+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:33.696047+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T19:01:44.210996+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:35.810400+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T19:01:44.210999+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:37.918733+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T19:01:44.211003+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:40.039553+00:00 | ERROR | 402 Payment Required"
+    },
+    {
+      "at": "2026-07-15T19:01:44.211007+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:43.150548+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
+    },
+    {
+      "at": "2026-07-15T19:01:44.211010+00:00",
+      "kind": "exhausted",
+      "line": "2026-07-15T19:01:43.787848+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
     }
   ]
 }
