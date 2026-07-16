@@ -319,7 +319,6 @@ def execute_catch_up(max_rounds: int = 5) -> int:
         log("SKIP | no API keys")
         return 0
     if not verify_api(test_write=True):
-        log("SKIP | write test failed — add credits on console.x.com")
         return 0
 
     total = complete_pending_threads()

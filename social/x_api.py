@@ -45,6 +45,8 @@ def get_client():
 
 def _is_write_permission_error(exc: Exception) -> bool:
     msg = str(exc).lower()
+    if "duplicate content" in msg:
+        return False
     return "403" in msg or "oauth1 app permissions" in msg or "not permitted" in msg
 
 
@@ -74,7 +76,8 @@ def verify_connection(test_write: bool = False) -> tuple[bool, str]:
         )
 
     try:
-        client.create_tweet(text=".")
+        probe = f"ping {datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
+        client.create_tweet(text=probe)
     except Exception as e:
         if _is_write_permission_error(e):
             return False, f"@{username} cannot post. {WRITE_PERMISSION_HINT}"
