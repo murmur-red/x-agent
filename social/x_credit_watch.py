@@ -71,9 +71,8 @@ def save_state(state: dict) -> None:
 def _estimate_line_cost(line: str) -> tuple[float, str | None]:
     if "ERROR | 402" in line or "402 Payment Required" in line:
         return 0.0, "exhausted"
-    if "POSTED |" in line or "REPLIED |" in line or "LABEL | POSTED" in line:
-        if "https://" in line:
-            return COST_POST_URL, "post_url"
+    if "POSTED |" in line or "REPLIED |" in line:
+        # Log lines always contain x.com/status URLs — not tweet content.
         return COST_POST_TEXT, "post_text"
     if "get_me" in line.lower():
         return COST_READ, "read"

@@ -42,7 +42,11 @@ def _schedule(start: date) -> list[dict]:
     def add(day_offset: int, slot: str, post, week: int, notes: str = "") -> None:
         post_date = (d + timedelta(days=day_offset)).isoformat()
         time_utc = SLOT_TIMES[slot]
-        key = (post_date, time_utc)
+        # Thread parts share one slot — they post as a single batch when due.
+        if post.thread_id:
+            key = (post_date, time_utc, post.thread_id, post.thread_part)
+        else:
+            key = (post_date, time_utc)
         if key in occupied:
             return
         occupied.add(key)

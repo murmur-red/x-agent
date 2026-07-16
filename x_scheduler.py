@@ -21,6 +21,7 @@ import argparse
 import csv
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -263,6 +264,77 @@ def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int
     return count
 
 
+def complete_pending_threads() -> int:
+    """Post thread parts 2+ when part 1 went live but later parts were dropped from calendar."""
+    if not credentials_ok():
+        return 0
+
+    from x_content import THREADS
+
+    posted_data = load_posted()
+    posted_ids = set(posted_data["posted_ids"])
+    tweet_ids: dict[str, str] = posted_data.get("tweet_ids", {})
+    count = 0
+
+    for key, root_id in list(tweet_ids.items()):
+        m = re.match(r"^(\d{4}-\d{2}-\d{2})_(.+)_(\d+)$", key)
+        if not m or m.group(3) != "1":
+            continue
+        post_date, thread_key = m.group(1), m.group(2)
+        if thread_key not in THREADS:
+            continue
+        parts = THREADS[thread_key]
+        reply_to = root_id
+        for part in parts[1:]:
+            marker = f"{post_date}_{thread_key}_{part.thread_part}"
+            if marker in tweet_ids:
+                reply_to = tweet_ids[marker]
+                continue
+            tweet_id = post_tweet(format_post_inline(part), reply_to=reply_to)
+            if not tweet_id:
+                log(f"FAILED | thread {thread_key} part {part.thread_part}")
+                save_posted({"posted_ids": list(posted_ids), "tweet_ids": tweet_ids})
+                return count
+            tweet_ids[marker] = tweet_id
+            posted_ids.add(f"{post_date}_17:00_{thread_key}_{part.thread_part}")
+            reply_to = tweet_id
+            count += 1
+            time.sleep(THREAD_DELAY_SEC)
+
+    if count:
+        save_posted({"posted_ids": list(posted_ids), "tweet_ids": tweet_ids})
+        log(f"THREAD | completed {count} orphaned part(s)")
+    return count
+
+
+def format_post_inline(post) -> str:
+    from x_content import format_post
+
+    return format_post(post)
+
+
+def execute_catch_up(max_rounds: int = 5) -> int:
+    """Post backlog: finish broken threads, then all due calendar slots."""
+    if not credentials_ok():
+        log("SKIP | no API keys")
+        return 0
+    if not verify_api(test_write=True):
+        log("SKIP | write test failed — add credits on console.x.com")
+        return 0
+
+    total = complete_pending_threads()
+    rows = load_calendar()
+    for round_num in range(1, max_rounds + 1):
+        n = execute_post(rows)
+        if n == 0:
+            break
+        total += n
+        log(f"CATCH-UP | round {round_num} — {n} tweet(s)")
+        time.sleep(TWEET_DELAY_SEC)
+    log(f"CATCH-UP | done — {total} tweet(s) total")
+    return total
+
+
 def _upsert_env(updates: dict[str, str]) -> None:
     lines: list[str] = []
     seen = set()
@@ -374,9 +446,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="murmur.red X autopost scheduler")
     parser.add_argument(
         "command",
-        choices=["init", "setup", "status", "calendar", "today", "week", "dry-run", "post", "uninstall"],
+        choices=[
+            "init", "setup", "status", "calendar", "today", "week",
+            "dry-run", "post", "catch-up", "uninstall",
+        ],
     )
     parser.add_argument("--force", type=int, default=None, help="Post calendar row by index")
+    parser.add_argument("--max-rounds", type=int, default=5, help="catch-up: scheduler passes")
     parser.add_argument("--write-test", action="store_true", help="Also test create_tweet permission")
     args = parser.parse_args()
 
@@ -420,6 +496,8 @@ def main() -> None:
         n = execute_post(rows, force_index=args.force)
         if n:
             log(f"BATCH | posted {n} tweet(s)")
+    elif args.command == "catch-up":
+        execute_catch_up(max_rounds=args.max_rounds)
 
 
 if __name__ == "__main__":

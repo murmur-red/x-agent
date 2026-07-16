@@ -20,6 +20,11 @@ on:
   schedule:
     - cron: "*/30 7-22 * * *"
   workflow_dispatch:
+    inputs:
+      catch_up:
+        description: "Post all missed calendar slots (after topping up credits)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -66,7 +71,11 @@ jobs:
           X_CREDIT_CRITICAL_USD: "2"
           CREDIT_DAILY_PROBE: "false"
         run: |
-          python3 x_scheduler.py post
+          if [ "${{ inputs.catch_up }}" = "true" ]; then
+            python3 x_scheduler.py catch-up --max-rounds 10
+          else
+            python3 x_scheduler.py post
+          fi
           python3 social/x_blog_promoter.py
           python3 social/x_trend_watcher.py
           python3 social/x_commenter.py
