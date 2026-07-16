@@ -46,6 +46,17 @@ THREAD_DELAY_SEC = 5
 TWEET_DELAY_SEC = 2
 
 
+def max_per_run(override: int | None = None) -> int:
+    """How many tweets to publish per scheduler invocation (default 1)."""
+    if override is not None:
+        return max(1, override)
+    raw = os.getenv("POST_MAX_PER_RUN", "1")
+    try:
+        return max(1, int(raw))
+    except ValueError:
+        return 1
+
+
 @dataclass
 class CalendarRow:
     index: int
@@ -200,7 +211,11 @@ def _queue_self_reply(tweet_id: str, row: CalendarRow) -> None:
         log(f"COMMENT QUEUE | skip — {exc}")
 
 
-def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int:
+def execute_post(
+    rows: list[CalendarRow],
+    force_index: int | None = None,
+    max_tweets: int | None = None,
+) -> int:
     if not credentials_ok():
         log("SKIP | no API keys — run: python3 x_scheduler.py init")
         return 0
@@ -218,10 +233,15 @@ def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int
             return 0
         batches = group_into_batches(due)
 
+    limit = max_per_run() if max_tweets is None else max(1, max_tweets)
     count = 0
     for batch in batches:
+        if count >= limit:
+            break
         reply_to: str | None = None
         for i, row in enumerate(batch):
+            if count >= limit:
+                break
             if row.row_id in posted_ids:
                 if row.thread_id:
                     prev_key = f"{row.date}_{row.thread_id}_{row.thread_part}"
@@ -264,7 +284,7 @@ def execute_post(rows: list[CalendarRow], force_index: int | None = None) -> int
     return count
 
 
-def complete_pending_threads() -> int:
+def complete_pending_threads(max_parts: int | None = None) -> int:
     """Post thread parts 2+ when part 1 went live but later parts were dropped from calendar."""
     if not credentials_ok():
         return 0
@@ -274,9 +294,12 @@ def complete_pending_threads() -> int:
     posted_data = load_posted()
     posted_ids = set(posted_data["posted_ids"])
     tweet_ids: dict[str, str] = posted_data.get("tweet_ids", {})
+    part_limit = max(1, max_parts) if max_parts is not None else max_per_run()
     count = 0
 
     for key, root_id in list(tweet_ids.items()):
+        if count >= part_limit:
+            break
         m = re.match(r"^(\d{4}-\d{2}-\d{2})_(.+)_(\d+)$", key)
         if not m or m.group(3) != "1":
             continue
@@ -286,6 +309,8 @@ def complete_pending_threads() -> int:
         parts = THREADS[thread_key]
         reply_to = root_id
         for part in parts[1:]:
+            if count >= part_limit:
+                break
             marker = f"{post_date}_{thread_key}_{part.thread_part}"
             if marker in tweet_ids:
                 reply_to = tweet_ids[marker]
@@ -313,24 +338,24 @@ def format_post_inline(post) -> str:
     return format_post(post)
 
 
-def execute_catch_up(max_rounds: int = 5) -> int:
-    """Post backlog: finish broken threads, then all due calendar slots."""
+def execute_catch_up(max_posts: int | None = None) -> int:
+    """Drip-feed backlog — at most max_posts tweets per run (default 1)."""
     if not credentials_ok():
         log("SKIP | no API keys")
         return 0
-    if not verify_api(test_write=True):
-        return 0
 
-    total = complete_pending_threads()
-    rows = load_calendar()
-    for round_num in range(1, max_rounds + 1):
-        n = execute_post(rows)
-        if n == 0:
-            break
-        total += n
-        log(f"CATCH-UP | round {round_num} — {n} tweet(s)")
-        time.sleep(TWEET_DELAY_SEC)
-    log(f"CATCH-UP | done — {total} tweet(s) total")
+    limit = max_per_run(max_posts)
+    log(f"CATCH-UP | max {limit} tweet(s) this run")
+
+    total = complete_pending_threads(max_parts=limit)
+    remaining = limit - total
+    if remaining > 0:
+        total += execute_post(load_calendar(), max_tweets=remaining)
+
+    if total:
+        log(f"CATCH-UP | posted {total} tweet(s)")
+    else:
+        log("CATCH-UP | nothing due")
     return total
 
 
@@ -451,7 +476,12 @@ def main() -> None:
         ],
     )
     parser.add_argument("--force", type=int, default=None, help="Post calendar row by index")
-    parser.add_argument("--max-rounds", type=int, default=5, help="catch-up: scheduler passes")
+    parser.add_argument(
+        "--max-posts",
+        type=int,
+        default=None,
+        help="Max tweets this run (default: POST_MAX_PER_RUN env, usually 1)",
+    )
     parser.add_argument("--write-test", action="store_true", help="Also test create_tweet permission")
     args = parser.parse_args()
 
@@ -492,11 +522,11 @@ def main() -> None:
                 print(f"📎 {r.media_note}")
             print()
     elif args.command == "post":
-        n = execute_post(rows, force_index=args.force)
+        n = execute_post(rows, force_index=args.force, max_tweets=args.max_posts)
         if n:
             log(f"BATCH | posted {n} tweet(s)")
     elif args.command == "catch-up":
-        execute_catch_up(max_rounds=args.max_rounds)
+        execute_catch_up(max_posts=args.max_posts)
 
 
 if __name__ == "__main__":

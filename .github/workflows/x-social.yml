@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       catch_up:
-        description: "Post all missed calendar slots (after topping up credits)"
+        description: "Drip one missed post (same as normal run when backlog exists)"
         type: boolean
         default: false
 
@@ -70,9 +70,10 @@ jobs:
           X_CREDIT_WARN_USD: "5"
           X_CREDIT_CRITICAL_USD: "2"
           CREDIT_DAILY_PROBE: "false"
+          POST_MAX_PER_RUN: "1"
         run: |
           if [ "${{ inputs.catch_up }}" = "true" ]; then
-            python3 x_scheduler.py catch-up --max-rounds 10
+            python3 x_scheduler.py catch-up
           else
             python3 x_scheduler.py post
           fi
