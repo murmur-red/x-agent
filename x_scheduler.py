@@ -267,12 +267,12 @@ def execute_post(
                     tweet_ids[row.row_id] = tweet_id
                 _queue_self_reply(tweet_id, row)
                 count += 1
-            elif not credentials_ok():
-                break
             else:
                 log(f"FAILED | {row.row_id}")
-                if row.thread_id:
-                    break
+                # Stop the whole run — credits, permissions, or API errors
+                # should not walk the rest of the backlog.
+                save_posted({"posted_ids": list(posted_ids), "tweet_ids": tweet_ids})
+                return count
 
             if i < len(batch) - 1:
                 time.sleep(THREAD_DELAY_SEC if row.thread_id else TWEET_DELAY_SEC)
