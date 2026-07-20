@@ -1,9 +1,18 @@
 {
   "promoted_ids": [
     "fae5a8ba-cf8e-4526-9385-4ba040fe6e94",
-    "27bbb43b-3b2f-4a8b-ace0-760ad6f9a24a"
+    "27bbb43b-3b2f-4a8b-ace0-760ad6f9a24a",
+    "67bbc019-0148-4e39-9543-2b9a216457d2"
   ],
   "history": [
+    {
+      "id": "67bbc019-0148-4e39-9543-2b9a216457d2",
+      "title": "A K-Pop Group's Fans Are Trying to Boycott a $9 Billion Company, and They Might Win",
+      "url": "https://blog.murmur.red/tech/2026/07/20/a-k-pop-groups-fans-are-trying-to-boycott-a-9-bill.html",
+      "at": "2026-07-20T13:13:55.575612+00:00",
+      "tweet_id": "2079193084059881962",
+      "teaser": "Every recommendation engine is built to farm fan attention. Turns out that attention can also be pointed straight at a $9B stock price. ENHYPEN fans are testing the theory."
+    },
     {
       "id": "27bbb43b-3b2f-4a8b-ace0-760ad6f9a24a",
       "title": "Trump Killed a Ceasefire By Announcement, and That's the New Warfare",
