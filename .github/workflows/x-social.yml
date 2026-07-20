@@ -1,28 +1,28 @@
-# X automation — runs on GitHub even if your Mac is off.
-# Budget target: ~€5/mo (~$5.50). No per-run API verify (idle runs = $0).
-# ~$0.015/text tweet, ~$0.20/tweet with https URL. See docs.x.com/x-api/getting-started/pricing.
+# X automation — article-first, 3 posts/week (Mon/Wed/Fri).
 #
-# Required repo secrets (Settings → Secrets → Actions):
+# When a new murmur.red blog article lands on Mon/Wed/Fri, post one X update
+# with an AI-angled teaser + full article link (~$0.20/tweet with URL).
+#
+# Required secrets:
 #   X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_TOKEN_SECRET
-# Optional (smarter teasers + Grok trend scan):
-#   ANTHROPIC_API_KEY, XAI_API_KEY
-# Credit alerts (GitHub Issue → emails murmur.red1@gmail.com):
-#   X_CREDIT_BALANCE_USD — set to console.x.com balance after each top-up
-#   X_CREDIT_WARN_USD (default 5), X_CREDIT_CRITICAL_USD (default 2)
+# Optional:
+#   ANTHROPIC_API_KEY  (smart AI teasers — falls back to plain title if missing)
+#   X_CREDIT_BALANCE_USD  (low-balance GitHub Issue alerts)
 #
-# State files (posted.json, promoted.json, trends_seen.json) are committed
-# back to this repo after each run so nothing double-posts.
+# Cost: ~3 posts/week × $0.20 ≈ $2.40/month if every post has a URL.
 
 name: X Social Automation
 
 on:
-  # Every 30 min, 07–22 UTC — catches all calendar slots; idle runs cost $0 on X API.
+  # Poll often enough to post soon after articles go live (Mon–Fri).
+  # Idle runs cost $0 on X API until a new article is promoted.
   schedule:
-    - cron: "*/30 7-22 * * *"
+    - cron: "*/20 6-20 * * 1,3,5"   # Mon/Wed/Fri every 20 min, 06–20 UTC
+    - cron: "0 8 * * 2,4"           # Tue/Thu once: credit check only (no promo days)
   workflow_dispatch:
     inputs:
-      catch_up:
-        description: "Drip one missed post (same as normal run when backlog exists)"
+      force_promo:
+        description: "Force-promote latest unpromoted blog article now"
         type: boolean
         default: false
 
@@ -49,43 +49,31 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run calendar + blog promo + trend watcher
+      - name: Promote article (Mon/Wed/Fri) + credit watch
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           BLOG_PROMO_TZ: Europe/Amsterdam
-          BLOG_PROMO_HOUR: "9"
-          TREND_MAX_PER_WEEK: "6"
-          BLOG_PROMO_FULL_URL: "true"
-          COMMENT_TZ: Europe/Amsterdam
-          COMMENT_HOUR: "10"
-          COMMENT_MAX_PER_DAY: "5"
-          MENTION_REPLY_MAX_PER_DAY: "10"
-          COMMENT_SELF_REPLY: "false"
+          BLOG_PROMO_MAX_AGE_DAYS: "2"
           X_CREDIT_BALANCE_USD: ${{ secrets.X_CREDIT_BALANCE_USD }}
           X_CREDIT_WARN_USD: "5"
           X_CREDIT_CRITICAL_USD: "2"
           CREDIT_DAILY_PROBE: "false"
-          POST_MAX_PER_RUN: "1"
         run: |
-          if [ "${{ inputs.catch_up }}" = "true" ]; then
-            python3 x_scheduler.py catch-up
+          if [ "${{ inputs.force_promo }}" = "true" ]; then
+            python3 social/x_blog_promoter.py --force
           else
-            python3 x_scheduler.py post
+            python3 social/x_blog_promoter.py
           fi
-          python3 social/x_blog_promoter.py
-          python3 social/x_trend_watcher.py
-          python3 social/x_commenter.py
           python3 social/x_credit_watch.py check
 
       - name: Commit state
         run: |
           git config user.email "murmur.red1@gmail.com"
           git config user.name "murmur-red"
-          git add social/posted.json social/promoted.json social/trends_seen.json social/comments_seen.json social/comment_targets.json social/credits_state.json
-          git diff --staged --quiet || git commit -m "x: update posting state [skip ci]"
+          git add social/promoted.json social/credits_state.json
+          git diff --staged --quiet || git commit -m "x: update promo state [skip ci]"
           git push

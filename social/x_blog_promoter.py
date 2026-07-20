@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Share new blog posts on @murmurRed — Mon/Wed/Fri ~09:00 Amsterdam time.
+Primary X channel for @murmurRed — 3 posts/week tied to blog articles.
 
-The blog agent publishes at 06:00 UTC; this runs at 07:00 UTC (09:00 CEST)
-and posts a short teaser + link to today's article.
+When a new article lands on Monday, Wednesday, or Friday, post one X update:
+AI-angled take + link to the article. No calendar spam.
 
 Usage:
-  python3 social/x_blog_promoter.py           # post if today's blog exists
+  python3 social/x_blog_promoter.py
   python3 social/x_blog_promoter.py --dry-run
-  python3 social/x_blog_promoter.py --force  # repost latest blog
+  python3 social/x_blog_promoter.py --force          # latest unpromoted (or latest) blog
+  python3 social/x_blog_promoter.py --force --id UUID
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ import json
 import os
 import re
 import sys
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -32,21 +33,34 @@ from x_api import log, post_tweet  # noqa: E402
 
 load_dotenv(ROOT / ".env")
 
-ARTICLES_URL = "https://raw.githubusercontent.com/murmur-red/murmur/main/articles.json"
+ARTICLES_URL = os.getenv(
+    "ARTICLES_URL",
+    "https://raw.githubusercontent.com/murmur-red/murmur/main/articles.json",
+)
 PROMOTED_PATH = Path(__file__).parent / "promoted.json"
 TZ = ZoneInfo(os.getenv("BLOG_PROMO_TZ", "Europe/Amsterdam"))
-PROMO_HOUR = int(os.getenv("BLOG_PROMO_HOUR", "9"))
+# Promo days only (Mon=0, Wed=2, Fri=4)
+PROMO_WEEKDAYS = {0, 2, 4}
+# How long after publish we still try to promote (handles delayed CI)
+MAX_AGE_DAYS = int(os.getenv("BLOG_PROMO_MAX_AGE_DAYS", "2"))
 
 TEASER_SYSTEM = """\
-You write short X posts for @murmurRed promoting a new blog article.
+You write short X posts for @murmurRed when a new murmur.red blog article goes live.
 
-Voice: sharp, curious, AI-aware. Not corporate. No CS jargon.
+Voice: human, wry, sharp. Sound like someone who tracks AI and tech in the real world.
+Not a press release. Not "excited to announce". Not corporate.
+
+The article may not be about AI on the surface. Your job:
+- Lead with an AI / tech / automation / platforms angle that honestly fits the piece
+- Bridge smartly from that angle to the article's concrete story (one specific detail)
+- Make someone care enough to open the link
+
 Rules:
-- Under 220 characters (URL will be appended separately)
-- Hook with the article's most surprising claim or tension
-- No hashtags, no "check out my blog", no em dashes
-- One or two short sentences max
-- Return ONLY the post text, nothing else
+- Under 200 characters (a full https URL is appended on the next line)
+- 1–2 short sentences. Okay to be a little funny or dry.
+- No hashtags, no "check out my blog", no "read more", no em dashes
+- Do not invent facts that are not in the title/excerpt
+- Return ONLY the post text
 """
 
 
@@ -66,87 +80,156 @@ def fetch_articles() -> list[dict]:
     return r.json().get("articles", [])
 
 
-def latest_blog() -> dict | None:
-    for article in fetch_articles():
-        if article.get("type") == "Blog" and article.get("url"):
-            return article
-    return None
+def _parse_date(raw: str) -> date | None:
+    if not raw:
+        return None
+    try:
+        return date.fromisoformat(raw[:10])
+    except ValueError:
+        return None
 
 
-def blog_for_today() -> dict | None:
-    today = date.today().isoformat()
-    blog = latest_blog()
-    if blog and blog.get("date", "")[:10] == today:
-        return blog
-    return None
+def _is_promo_weekday(d: date) -> bool:
+    return d.weekday() in PROMO_WEEKDAYS
+
+
+def blogs() -> list[dict]:
+    out = []
+    for a in fetch_articles():
+        if a.get("type") != "Blog" or not a.get("url"):
+            continue
+        d = _parse_date(a.get("date", ""))
+        if not d:
+            continue
+        a = {**a, "_date": d}
+        out.append(a)
+    out.sort(key=lambda a: a["_date"], reverse=True)
+    return out
+
+
+def candidate_articles(promoted_ids: set[str], force: bool = False) -> list[dict]:
+    """Unpromoted blogs published on Mon/Wed/Fri within MAX_AGE_DAYS."""
+    today = datetime.now(TZ).date()
+    cutoff = today - timedelta(days=MAX_AGE_DAYS)
+    candidates = []
+    for a in blogs():
+        aid = a.get("id", a["url"])
+        if aid in promoted_ids and not force:
+            continue
+        if a["_date"] < cutoff and not force:
+            continue
+        # Only promote articles that published on a promo weekday
+        if not _is_promo_weekday(a["_date"]) and not force:
+            continue
+        candidates.append(a)
+    return candidates
+
+
+def pick_article(force: bool = False, article_id: str | None = None) -> dict | None:
+    promoted = load_promoted()
+    promoted_ids = set(promoted.get("promoted_ids", []))
+
+    if article_id:
+        for a in blogs():
+            if a.get("id") == article_id or a.get("url") == article_id:
+                return a
+        return None
+
+    if force:
+        for a in blogs():
+            aid = a.get("id", a["url"])
+            if aid not in promoted_ids:
+                return a
+        return blogs()[0] if blogs() else None
+
+    candidates = candidate_articles(promoted_ids, force=False)
+    if not candidates:
+        return None
+
+    # Prefer today's article, else most recent unpromoted promo-day post
+    today = datetime.now(TZ).date()
+    for a in candidates:
+        if a["_date"] == today:
+            return a
+    return candidates[0]
 
 
 def fetch_blog_excerpt(url: str) -> str:
     try:
         r = httpx.get(url, timeout=20, follow_redirects=True)
         r.raise_for_status()
-        text = re.sub(r"<[^>]+>", " ", r.text)
+        text = re.sub(r"<script[^>]*>.*?</script>", " ", r.text, flags=re.I | re.S)
+        text = re.sub(r"<style[^>]*>.*?</style>", " ", text, flags=re.I | re.S)
+        text = re.sub(r"<[^>]+>", " ", text)
         text = re.sub(r"\s+", " ", text).strip()
-        return text[:1500]
+        return text[:2000]
     except Exception:
         return ""
 
 
-def generate_teaser(title: str, excerpt: str) -> str:
+def generate_teaser(title: str, topic: str, excerpt: str) -> str:
     api_key = os.getenv("ANTHROPIC_API_KEY", "")
+    fallback = (
+        f"AI is rewriting how stories like this move. "
+        f"New on murmur.red: {title}"
+    )[:200]
+
     if not api_key:
-        return f"New on the blog: {title}"
+        return fallback
 
     import anthropic
 
     client = anthropic.Anthropic(api_key=api_key)
     model = os.getenv("CLAUDE_MODEL", "claude-opus-4-8")
-    prompt = f"Article title: {title}\n\nOpening content:\n{excerpt[:800] or '(no excerpt)'}"
-    resp = client.messages.create(
-        model=model,
-        max_tokens=120,
-        system=TEASER_SYSTEM,
-        messages=[{"role": "user", "content": prompt}],
+    prompt = (
+        f"Article title: {title}\n"
+        f"Topic tag: {topic or 'tech'}\n\n"
+        f"Opening content:\n{excerpt[:1200] or '(no excerpt — use title only)'}"
     )
-    text = resp.content[0].text.strip().replace("—", ". ")
-    return text[:220]
-
-
-def _url_in_post() -> bool:
-    """Full https URLs cost ~$0.20/tweet vs ~$0.015 for plain text on X API."""
-    return os.getenv("BLOG_PROMO_FULL_URL", "false").lower() in ("1", "true", "yes")
+    try:
+        resp = client.messages.create(
+            model=model,
+            max_tokens=150,
+            system=TEASER_SYSTEM,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        text = resp.content[0].text.strip().replace("—", ". ").replace("–", "-")
+        text = re.sub(r"\s+", " ", text).strip()
+        return text[:200]
+    except Exception as e:
+        log(f"TEASER | Claude failed — {e}")
+        return fallback
 
 
 def build_post(article: dict) -> str:
     title = article["title"]
     url = article["url"]
+    topic = article.get("topic", "")
     excerpt = fetch_blog_excerpt(url)
-    teaser = generate_teaser(title, excerpt)
-    link_line = url if _url_in_post() else "murmur.red"
-    post = f"{teaser}\n\n{link_line}"
+    teaser = generate_teaser(title, topic, excerpt)
+    # Full URL required — costs ~$0.20/tweet on X pay-per-use
+    post = f"{teaser}\n\n{url}"
     if len(post) > 280:
-        post = f"{teaser[:200].rstrip()}…\n\n{link_line}"
+        room = 280 - len(url) - 3
+        post = f"{teaser[:room].rstrip()}…\n\n{url}"
     return post
 
 
 def is_promo_day(now: datetime | None = None) -> bool:
     now = now or datetime.now(TZ)
-    return now.weekday() in (0, 2, 4)  # Mon, Wed, Fri
+    return now.weekday() in PROMO_WEEKDAYS
 
 
-def run(dry_run: bool = False, force: bool = False) -> int:
+def run(dry_run: bool = False, force: bool = False, article_id: str | None = None) -> int:
     now = datetime.now(TZ)
-    if not force and not is_promo_day(now):
-        log(f"SKIP | not a promo day ({now.strftime('%A')})")
+
+    if not force and not article_id and not is_promo_day(now):
+        log(f"SKIP | not a promo day ({now.strftime('%A')}) — only Mon/Wed/Fri")
         return 0
 
-    if not force and now.hour < PROMO_HOUR:
-        log(f"SKIP | before promo hour {PROMO_HOUR}:00 {TZ}")
-        return 0
-
-    article = latest_blog() if force else blog_for_today()
+    article = pick_article(force=force, article_id=article_id)
     if not article:
-        log("SKIP | no blog post for today")
+        log("SKIP | no new Mon/Wed/Fri blog article to promote")
         return 0
 
     article_id = article.get("id", article["url"])
@@ -156,32 +239,39 @@ def run(dry_run: bool = False, force: bool = False) -> int:
         return 0
 
     post_text = build_post(article)
-    log(f"PROMO | {article['title'][:60]}")
+    log(f"PROMO | {article['title'][:70]}")
+    log(f"PROMO | {post_text[:120].replace(chr(10), ' / ')}…")
     tweet_id = post_tweet(post_text, dry_run=dry_run)
 
     if dry_run:
         return 1
 
     if tweet_id:
-        promoted["promoted_ids"].append(article_id)
+        if article_id not in promoted["promoted_ids"]:
+            promoted["promoted_ids"].append(article_id)
         promoted["history"].insert(0, {
             "id": article_id,
             "title": article["title"],
             "url": article["url"],
             "at": datetime.now(timezone.utc).isoformat(),
             "tweet_id": tweet_id,
+            "teaser": post_text.split("\n\n")[0][:200],
         })
+        promoted["history"] = promoted["history"][:50]
         save_promoted(promoted)
         return 1
+
+    log("FAILED | promo tweet did not post (check X credits / tokens)")
     return 0
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Promote today's blog post on X")
+    parser = argparse.ArgumentParser(description="Promote Mon/Wed/Fri blog posts on X")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--force", action="store_true", help="Promote latest blog regardless of date")
+    parser.add_argument("--force", action="store_true", help="Ignore weekday/date gates")
+    parser.add_argument("--id", dest="article_id", help="Promote specific article id or URL")
     args = parser.parse_args()
-    n = run(dry_run=args.dry_run, force=args.force)
+    n = run(dry_run=args.dry_run, force=args.force, article_id=args.article_id)
     if n:
         log(f"DONE | promoted {n} post(s)")
 
