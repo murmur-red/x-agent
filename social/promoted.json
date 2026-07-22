@@ -2,9 +2,18 @@
   "promoted_ids": [
     "fae5a8ba-cf8e-4526-9385-4ba040fe6e94",
     "27bbb43b-3b2f-4a8b-ace0-760ad6f9a24a",
-    "67bbc019-0148-4e39-9543-2b9a216457d2"
+    "67bbc019-0148-4e39-9543-2b9a216457d2",
+    "5c222755-111e-478d-844e-a9bdef15638c"
   ],
   "history": [
+    {
+      "id": "5c222755-111e-478d-844e-a9bdef15638c",
+      "title": "Tesla's Robotaxi Just Landed in Tampa, and Your Uber Driver Should Be Scared",
+      "url": "https://blog.murmur.red/tech/2026/07/22/teslas-robotaxi-just-landed-in-tampa-and-your-uber.html",
+      "at": "2026-07-22T08:33:37.444971+00:00",
+      "tweet_id": "2079847319365886022",
+      "teaser": "AI is rewriting how stories like this move. New on murmur.red: Tesla's Robotaxi Just Landed in Tampa, and Your Uber Driver Should Be Scared"
+    },
     {
       "id": "67bbc019-0148-4e39-9543-2b9a216457d2",
       "title": "A K-Pop Group's Fans Are Trying to Boycott a $9 Billion Company, and They Might Win",
