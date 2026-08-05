@@ -1,9 +1,9 @@
 {
   "balance_usd": 7.24,
   "balance_set_at": "2026-07-16T11:16:03.273588+00:00",
-  "spent_usd": 0.09,
-  "log_offset": 435,
-  "last_check_at": "2026-08-05T15:49:42.144945+00:00",
+  "spent_usd": 0.105,
+  "log_offset": 420,
+  "last_check_at": "2026-08-05T17:42:03.233705+00:00",
   "last_probe_at": null,
   "last_probe_ok": true,
   "last_alert_level": null,
@@ -101,6 +101,11 @@
     },
     {
       "at": "2026-08-05T15:49:42.144929+00:00",
+      "kind": "post_text",
+      "cost_usd": 0.015
+    },
+    {
+      "at": "2026-08-05T17:42:03.233688+00:00",
       "kind": "post_text",
       "cost_usd": 0.015
     }
