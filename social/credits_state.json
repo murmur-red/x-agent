@@ -2,8 +2,8 @@
   "balance_usd": 7.24,
   "balance_set_at": "2026-07-16T11:16:03.273588+00:00",
   "spent_usd": 0.105,
-  "log_offset": 89,
-  "last_check_at": "2026-09-08T12:39:17.626788+00:00",
+  "log_offset": 552,
+  "last_check_at": "2026-09-09T10:57:09.802991+00:00",
   "last_probe_at": null,
   "last_probe_ok": true,
   "last_alert_level": null,
@@ -168,6 +168,11 @@
       "at": "2026-09-07T11:56:25.440850+00:00",
       "kind": "exhausted",
       "line": "2026-09-07T11:56:25.372372+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
+    },
+    {
+      "at": "2026-09-09T10:57:09.802971+00:00",
+      "kind": "exhausted",
+      "line": "2026-09-09T10:57:09.713670+00:00 | ERROR | 402 no credits \u2014 X API credits exhausted. console.x.com \u2192 purchase credits (~$0.015/text tweet, ~$0.20/tweet with https URL)"
     }
   ]
 }
